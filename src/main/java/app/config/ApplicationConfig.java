@@ -1,6 +1,8 @@
 package app.config;
 
 import app.dtos.ErrorResponseDTO;
+import app.enums.Role;
+import app.exceptions.*;
 import app.routes.Routes;
 import io.javalin.Javalin;
 import io.javalin.http.UnauthorizedResponse;
@@ -13,15 +15,15 @@ public class ApplicationConfig {
 
     public static Javalin startServer(int port, EntityManagerFactory emf) {
         Routes routes = new Routes(emf);
-        SecurityRoutes securityRoutes = new SecurityRoutes(emf);
+        //SecurityRoutes securityRoutes = new SecurityRoutes(emf);
         Javalin app = Javalin.create(config -> {
             config.showJavalinBanner = false;
-            config.bundledPlugins.enableRouteOverview("/routes", RoleEnum.ANYONE);
+            config.bundledPlugins.enableRouteOverview("/routes", Role.ANYONE);
             config.router.contextPath = "/api/v1";
             config.router.apiBuilder(routes.getRoutes());
         });
 
-        configureSecurity(app, securityRoutes.getSecurityController());
+        //configureSecurity(app, securityRoutes.getSecurityController());
         configureLogging(app);
         configureExceptionHandling(app);
 
@@ -35,6 +37,7 @@ public class ApplicationConfig {
 
 
     private static void configureExceptionHandling(Javalin app) {
+
         app.exception(IllegalStateException.class, (e, ctx) -> {
             logger.warn("Bad request at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(400).json(new ErrorResponseDTO(
@@ -45,7 +48,7 @@ public class ApplicationConfig {
             ));
         });
 
-        app.exception(HotelNotFoundException.class, (e, ctx) -> {
+/*        app.exception(HotelNotFoundException.class, (e, ctx) -> {
             logger.warn("Handled HotelNotFoundException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(404).json(new ErrorResponseDTO(
                     "Hotel not found",
@@ -53,9 +56,9 @@ public class ApplicationConfig {
                     ctx.path(),
                     ctx.method().toString()
             ));
-        });
+        });*/
 
-        app.exception(RoomNotFoundException.class, (e, ctx) -> {
+        /*app.exception(RoomNotFoundException.class, (e, ctx) -> {
             logger.warn("Handled RoomNotFoundException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(404).json(new ErrorResponseDTO(
                     "Room not found",
@@ -63,7 +66,7 @@ public class ApplicationConfig {
                     ctx.path(),
                     ctx.method().toString()
             ));
-        });
+        }); */
 
         app.exception(ValidationException.class, (e, ctx) -> {
             logger.warn("Handled ValidationException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
@@ -158,8 +161,8 @@ public class ApplicationConfig {
         });
     }
 
-    public static void configureSecurity(Javalin app, SecurityController securityController) {
+    /*public static void configureSecurity(Javalin app, SecurityController securityController) {
         app.beforeMatched(securityController.authenticate());
         app.beforeMatched(securityController.authorize());
-    }
+    }*/
 }
