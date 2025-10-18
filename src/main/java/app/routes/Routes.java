@@ -6,13 +6,20 @@ import jakarta.persistence.EntityManagerFactory;
 import java.util.Map;
 
 import static io.javalin.apibuilder.ApiBuilder.get;
+import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class Routes {
+
+    private final SecurityRoutes securityRoutes;
+
+    public Routes(EntityManagerFactory emf){
+        this.securityRoutes = new SecurityRoutes(emf);
+    }
 
     public EndpointGroup getRoutes(){
         return () -> {
             get("/", ctx -> ctx.result("Hello World!"));
-            get("healthcheck", ctx -> ctx.status(200).json(Map.of("msg", "API is up and running")));
+            path("auth", securityRoutes.getRoutes());
         } ;
     }
 }

@@ -4,6 +4,7 @@ import app.dtos.ErrorResponseDTO;
 import app.enums.Role;
 import app.exceptions.*;
 import app.routes.Routes;
+import app.routes.SecurityRoutes;
 import io.javalin.Javalin;
 import io.javalin.http.UnauthorizedResponse;
 import jakarta.persistence.EntityManagerFactory;
@@ -13,9 +14,9 @@ import org.slf4j.LoggerFactory;
 public class ApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
-    public static Javalin startServer(int port) {
-        Routes routes = new Routes();
-        //SecurityRoutes securityRoutes = new SecurityRoutes(emf);
+    public static Javalin startServer(int port, EntityManagerFactory emf) {
+        Routes routes = new Routes(emf);
+        SecurityRoutes securityRoutes = new SecurityRoutes(emf);
         Javalin app = Javalin.create(config -> {
             config.showJavalinBanner = false;
             config.bundledPlugins.enableRouteOverview("/routes", Role.ANYONE);

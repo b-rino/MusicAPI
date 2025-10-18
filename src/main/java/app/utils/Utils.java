@@ -1,6 +1,10 @@
 package app.utils;
 
 import app.exceptions.ApiException;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,5 +26,13 @@ public class Utils {
         } catch (IOException ex) {
             throw new ApiException(500, String.format("Could not read property %s.", propName));
         }
+    }
+
+    public ObjectMapper getObjectMapper() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false); // Ignore unknown properties in JSON
+        objectMapper.registerModule(new JavaTimeModule()); // Serialize and deserialize java.time objects
+        objectMapper.writer(new DefaultPrettyPrinter());
+        return objectMapper;
     }
 }
