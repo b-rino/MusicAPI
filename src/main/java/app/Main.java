@@ -10,6 +10,7 @@ public class Main {
         EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
         ApplicationConfig.startServer(7074, emf);
+        System.out.println("Server started on port 7074!");
     }
 
 }
