@@ -18,6 +18,7 @@ public class Routes {
     public EndpointGroup getRoutes(){
         return () -> {
             get("/", ctx -> ctx.result("Hello World!"));
+            get("healthcheck", ctx -> ctx.status(200).json("{\"msg\": \"API is up and running\"}"));
         } ;
     }
 }
