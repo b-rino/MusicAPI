@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 public class ApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
-    public static Javalin startServer(int port, EntityManagerFactory emf) {
-        Routes routes = new Routes(emf);
+    public static Javalin startServer(int port) {
+        Routes routes = new Routes();
         //SecurityRoutes securityRoutes = new SecurityRoutes(emf);
         Javalin app = Javalin.create(config -> {
             config.showJavalinBanner = false;

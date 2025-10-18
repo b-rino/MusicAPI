@@ -6,8 +6,14 @@ import jakarta.persistence.EntityManagerFactory;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
 
-        ApplicationConfig.startServer(7074, emf);
+        ApplicationConfig.startServer(7074);
+
+        try {
+            Thread.currentThread().join(); // Holder applikationen i gang
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
+
 }
