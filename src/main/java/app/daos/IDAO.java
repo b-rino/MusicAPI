@@ -2,7 +2,7 @@ package app.daos;
 
 import java.util.List;
 
-public interface DAO <T, I> {
+public interface IDAO<T, I> {
 
 
     T create(T t);
