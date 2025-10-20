@@ -30,7 +30,7 @@ public class Song {
     @Column(length = 100, nullable = false)
     private String artist;
     @ToString.Include
-    @Column(length = 50, nullable = true)
+    @Column(length = 50)
     private String album;
     @ToString.Include
     private Integer releaseYear;

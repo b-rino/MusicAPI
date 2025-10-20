@@ -1,5 +1,7 @@
 package app.daos;
 
+import app.config.HibernateConfig;
+import app.entities.Playlist;
 import app.entities.Role;
 import app.entities.User;
 import app.exceptions.EntityAlreadyExistsException;
@@ -67,6 +69,20 @@ public class SecurityDAO {
         }
     }
 
+    public User addUserPlaylist(String username, int id) throws EntityNotFoundException{
+        try (EntityManager em = emf.createEntityManager()){
+            User user = em.find(User.class, username);
+            Playlist playlist = em.find(Playlist.class, id);
+            if(user == null || playlist == null){
+                throw new EntityNotFoundException("User or playlist not found!");
+            }
+            em.getTransaction().begin();
+            user.addPlaylist(playlist);
+            em.getTransaction().commit();
+            return user;
+        }
+    }
+
     public Role createRole(String roleName) throws EntityAlreadyExistsException {
         try (EntityManager em = emf.createEntityManager()) {
             Role role = em.find(Role.class, roleName);
@@ -83,7 +99,8 @@ public class SecurityDAO {
     }
 
 
-    public boolean existingUsername(String username)  {
+    //TODO: Bliver denne metode brugt i sidste ende?
+    public boolean existingUsername(String username) throws EntityAlreadyExistsException {
         try(EntityManager em = emf.createEntityManager()){
             User user = em.find(User.class, username);
             if(user != null){
@@ -92,5 +109,17 @@ public class SecurityDAO {
                 return false;
             }
         }
+    }
+
+
+    public static void main(String[] args) {
+        SecurityDAO dao = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
+
+        dao.createUser("admin", "admin");
+        dao.createUser("User", "User");
+        dao.createRole("User");
+        dao.createRole("Admin");
+        dao.addUserRole("admin", "Admin");
+        dao.addUserRole("User", "User");
     }
 }

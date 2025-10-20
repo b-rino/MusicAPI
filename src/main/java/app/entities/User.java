@@ -29,11 +29,11 @@ public class User {
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_name"),
             inverseJoinColumns = @JoinColumn(name = "role_name"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet();
 
+    @OneToMany(mappedBy = "owner")
+    private Set<Playlist> playlists = new HashSet();
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
-    private Set<Playlist> playlists;
 
     public User(String username, String password){
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -48,13 +48,14 @@ public class User {
         }
     }
 
-    public void addPlaylist(Playlist playlist){
-        playlists.add(playlist);
-        playlist.setOwner(this);
-    }
 
     public void addRole(Role role){
         roles.add(role);
         role.getUsers().add(this);
+    }
+
+    public void addPlaylist(Playlist playlist){
+        playlists.add(playlist);
+        playlist.setOwner(this);
     }
 }

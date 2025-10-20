@@ -39,7 +39,7 @@ public class ApplicationConfig {
 
     private static void configureExceptionHandling(Javalin app) {
 
-        //TODO: Ændr fra hotel til song !
+        //TODO: Ændr Invalid request til noget mere sigende!
         app.exception(IllegalStateException.class, (e, ctx) -> {
             logger.warn("Bad request at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(400).json(new ErrorResponseDTO(

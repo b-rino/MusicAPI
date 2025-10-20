@@ -3,6 +3,7 @@ package app.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,5 +29,5 @@ public class Playlist {
     private User owner;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Song> songs;
+    private Set<Song> songs = new HashSet();
 }
