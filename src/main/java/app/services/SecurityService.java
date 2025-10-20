@@ -7,6 +7,7 @@ import app.entities.User;
 import app.exceptions.EntityAlreadyExistsException;
 import app.exceptions.EntityNotFoundException;
 import app.exceptions.TokenCreationException;
+import app.exceptions.ValidationException;
 import app.utils.SecurityUtils;
 import app.utils.Utils;
 import org.slf4j.Logger;
@@ -68,5 +69,13 @@ public class SecurityService {
                 .collect(Collectors.toSet());
 
         return new UserDTO(newUserWithRoles.getUsername(), roleNames);
+    }
+
+    public User getVerifiedUser(String username, String password) throws ValidationException {
+        try{
+            return dao.getVerifiedUser(username, password);
+        } catch (Exception e){
+            throw new ValidationException("Invalid username or password");
+        }
     }
 }

@@ -29,6 +29,7 @@ public class SecurityRoutes {
     public EndpointGroup getRoutes() {
         return () -> {
             post("register", securityController.register());
+            post("login", securityController.login());
             get("healthcheck", securityController::healthCheck);
         };
     }

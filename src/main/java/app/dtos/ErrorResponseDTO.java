@@ -1,5 +1,12 @@
 package app.dtos;
 
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Builder
 public class ErrorResponseDTO {
 
     private String error;
