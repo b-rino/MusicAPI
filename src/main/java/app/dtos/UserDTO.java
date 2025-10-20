@@ -21,8 +21,15 @@ import java.util.Set;
 public class UserDTO {
 
     private String username;
-    private Set<String> roles;
-    private Set<PlaylistDTO> playlists;
+    private String password;
+    private Set<String> roles = new HashSet();
+    private Set<PlaylistDTO> playlists = new HashSet();
+
+
+    public UserDTO(String username, Set<String> roles){
+        this.username = username;
+        this.roles = roles;
+    }
 
 
     @Override
