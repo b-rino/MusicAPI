@@ -1,7 +1,5 @@
 package app.dtos;
 
-import app.entities.Song;
-import app.entities.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -17,7 +15,7 @@ public class PlaylistDTO {
 
     private Integer id;
     private String name;
-    private String ownerUsername;
+    private String username;
     private Set<SongDTO> songs;
 
 }

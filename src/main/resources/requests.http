@@ -1,0 +1,45 @@
+### Register a new user
+POST http://localhost:7074/api/v1/register
+Content-Type: application/json
+
+{
+  "username": "benjamin",
+  "password": "securePassword123"
+}
+
+###
+
+### Login and get JWT token
+POST http://localhost:7074/api/v1/login
+Content-Type: application/json
+
+{
+  "username": "benjamin",
+  "password": "securePassword123"
+}
+
+###
+
+### Create a new playlist (requires token)
+POST http://localhost:7074/api/v1/playlists
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+Content-Type: application/json
+
+{
+  "name": "Chill Vibesz"
+}
+
+###
+
+### Get all playlists for specific user (requires token)
+GET http://localhost:7074/api/v1/playlists
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+Content-Type: application/json
+
+###
+
+
+###
+
+
+###

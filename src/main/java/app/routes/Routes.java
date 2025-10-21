@@ -14,11 +14,13 @@ public class Routes {
 
     private final AuthRoutes authRoutes;
     private final SystemRoutes systemRoutes;
+    private final PlaylistRoutes playlistRoutes;
 
     public Routes(EntityManagerFactory emf){
         DeezerClient dc = new DeezerClient();
         this.authRoutes = new AuthRoutes(emf);
         this.systemRoutes = new SystemRoutes(dc);
+        this.playlistRoutes = new PlaylistRoutes(emf);
     }
 
     public EndpointGroup getRoutes(){
@@ -26,6 +28,7 @@ public class Routes {
             get("/", ctx -> ctx.result("Hello World!"));
             path("", systemRoutes.getRoutes());
             path("", authRoutes.getRoutes());
+            path("", playlistRoutes.getRoutes());
         } ;
     }
 }

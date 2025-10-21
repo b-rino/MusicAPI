@@ -79,4 +79,13 @@ public class SecurityUtils {
         }
         return false;
     }
+
+    public static String getUsernameFromToken(String token) {
+        try {
+            SignedJWT jwt = SignedJWT.parse(token);
+            return jwt.getJWTClaimsSet().getClaim("username").toString();
+        } catch (ParseException e) {
+            throw new RuntimeException("Invalid token", e);
+        }
+    }
 }

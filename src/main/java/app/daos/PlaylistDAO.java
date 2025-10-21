@@ -66,6 +66,26 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
         }
     }
 
+    public boolean existsByNameAndOwner(String name, User owner) {
+        try (EntityManager em = emf.createEntityManager()) {
+            Long count = em.createQuery(
+                            "SELECT COUNT(p) FROM Playlist p WHERE p.name = :name AND p.owner = :owner", Long.class)
+                    .setParameter("name", name)
+                    .setParameter("owner", owner)
+                    .getSingleResult();
+            return count > 0;
+        }
+    }
+
+    public List<Playlist> getAllPlaylistsByOwner(String username){
+        try(EntityManager em = emf.createEntityManager()){
+            return em.createQuery("SELECT DISTINCT p FROM Playlist p LEFT JOIN FETCH p.songs WHERE p.owner.username = :username", Playlist.class)
+                    .setParameter("username", username)
+                    .getResultList();
+        }
+    }
+
+
     public static void main(String[] args) {
         PlaylistDAO dao = new PlaylistDAO(HibernateConfig.getEntityManagerFactory());
         SecurityDAO sdao = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
