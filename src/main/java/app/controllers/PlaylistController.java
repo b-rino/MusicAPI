@@ -10,6 +10,7 @@ import app.entities.User;
 import app.exceptions.ValidationException;
 import app.services.PlaylistService;
 import app.utils.SecurityUtils;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.http.Context;
 
 import java.util.List;
@@ -56,8 +57,10 @@ public class PlaylistController {
     public void addSong(Context ctx) {
         int playlistId = Integer.parseInt(ctx.pathParam("id"));
         AddSongDTO dto = ctx.bodyAsClass(AddSongDTO.class);
+        String username = SecurityUtils.getUsernameFromToken(ctx.header("Authorization").replace("Bearer ", ""));
 
-        PlaylistDTO updated = service.addSong(playlistId, dto);
+
+        PlaylistDTO updated = service.addSong(playlistId, dto, username);
         ctx.status(200).json(updated);
     }
 
@@ -67,6 +70,38 @@ public class PlaylistController {
 
         List<SongDTO> songs = service.getSongsForUserPlaylist(playlistId, username);
         ctx.json(songs);
+    }
+
+    public void deletePlaylist(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("id"));
+        String token = ctx.header("Authorization").replace("Bearer", "").trim();
+        String username = SecurityUtils.getUsernameFromToken(token);
+
+        service.deletePlaylist(playlistId, username);
+        ctx.status(204);
+    }
+
+
+    public void removeSongFromPlaylist(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("playlistId"));
+        int songId = Integer.parseInt(ctx.pathParam("songId"));
+        String token = ctx.header("Authorization").replace("Bearer", "").trim();
+        String username = SecurityUtils.getUsernameFromToken(token);
+
+        service.removeSongFromPlaylist(playlistId, songId, username);
+        ctx.status(204);
+    }
+
+    public void updatePlaylistName(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("id"));
+        String token = ctx.header("Authorization").replace("Bearer", "").trim();
+        String username = SecurityUtils.getUsernameFromToken(token);
+
+        ObjectNode body = ctx.bodyAsClass(ObjectNode.class);
+        String newName = body.get("name").asText();
+
+        PlaylistDTO updated = service.updatePlaylistName(playlistId, newName, username);
+        ctx.status(200).json(updated);
     }
 
 

@@ -5,6 +5,7 @@ import app.entities.Role;
 import app.entities.User;
 import app.exceptions.ValidationException;
 import app.services.AuthService;
+import app.utils.SecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.http.Context;
@@ -67,6 +68,48 @@ public class AuthController {
                     put("username", userDTO.getUsername());
             ctx.json(on).status(200);
 
+        };
+    }
+
+    public Handler authenticate() {
+
+        return ctx -> {
+            if (ctx.method().toString().equals("OPTIONS")){
+                ctx.status(200);
+                return;
+            }
+
+            Set<String> allowedRoles = ctx.routeRoles().stream().
+                    map(role -> role.toString().toUpperCase()).collect(Collectors.toSet());
+
+            //If the endpoint is not protected with roles (or open to role ANYONE) then skip
+            if(SecurityUtils.isOpenEndpoint(allowedRoles))
+                return;
+
+            UserDTO verifiedTokenUser = authService.validateAndGetUserFromToken(ctx);
+            ctx.attribute("user", verifiedTokenUser);
+
+        };
+    }
+
+
+    public Handler authorize() {
+        return ctx -> {
+            Set<String> allowedRoles = ctx.routeRoles().
+                    stream().map(role -> role.toString().toUpperCase()).
+                    collect(Collectors.toSet());
+
+            if(SecurityUtils.isOpenEndpoint(allowedRoles)) {
+                return;
+            }
+            UserDTO user = ctx.attribute("user");
+            if (user == null){
+                throw new ValidationException("No user was added from the token");
+            }
+
+            if(!authService.userHasAllowedRole(user, allowedRoles)){
+                throw new ValidationException("User was not authorized with roles: " + user.getRoles());
+            }
         };
     }
 

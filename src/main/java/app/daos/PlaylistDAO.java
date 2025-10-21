@@ -50,15 +50,16 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
     @Override
     public boolean delete(Integer id) {
         try(EntityManager em = emf.createEntityManager()){
-            em.getTransaction().begin();
             Playlist playlistToDelete = em.find(Playlist.class, id);
-            if(playlistToDelete == null){
+            if(playlistToDelete != null){
+                em.getTransaction().begin();
+                em.remove(playlistToDelete);
+                em.getTransaction().commit();
+                return true;
+            } else{
                 em.getTransaction().rollback();
                 return false;
             }
-            em.remove(playlistToDelete);
-            em.getTransaction().commit();
-            return true;
         }
     }
 
@@ -148,7 +149,7 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
 
     public static void main(String[] args) {
         PlaylistDAO dao = new PlaylistDAO(HibernateConfig.getEntityManagerFactory());
-        SecurityDAO sdao = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
+        AuthDAO sdao = new AuthDAO(HibernateConfig.getEntityManagerFactory());
         SongDAO songDAO = new SongDAO(HibernateConfig.getEntityManagerFactory());
 
 

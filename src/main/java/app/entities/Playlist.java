@@ -30,4 +30,14 @@ public class Playlist {
 
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Song> songs = new HashSet();
+
+
+
+    public void removeSong(Song song) {
+        if (songs != null) {
+            songs.remove(song);
+            song.setPlaylists(null); // for breaking bi directional link
+        }
+    }
+
 }

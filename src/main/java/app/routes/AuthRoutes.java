@@ -1,7 +1,7 @@
 package app.routes;
 
 import app.controllers.AuthController;
-import app.daos.SecurityDAO;
+import app.daos.AuthDAO;
 import app.services.AuthService;
 import app.utils.SecurityUtils;
 import app.utils.Utils;
@@ -18,7 +18,7 @@ public class AuthRoutes {
     private final AuthController authController;
 
     public AuthRoutes(EntityManagerFactory emf){
-        SecurityDAO dao = new SecurityDAO(emf);
+        AuthDAO dao = new AuthDAO(emf);
         SecurityUtils securityUtils = new SecurityUtils();
         AuthService authService = new AuthService(dao, securityUtils);
         this.mapper = new Utils().getObjectMapper();
@@ -31,5 +31,9 @@ public class AuthRoutes {
             post("/register", authController.register());
             post("/login", authController.login());
         };
+    }
+
+    public AuthController getAuthController() {
+        return authController;
     }
 }

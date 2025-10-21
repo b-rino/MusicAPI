@@ -20,28 +20,46 @@ Content-Type: application/json
 
 ###
 
-### Create a new playlist (requires token)
-POST http://localhost:7074/api/v1/playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+
+### Login and get JWT token
+POST http://localhost:7074/api/v1/login
 Content-Type: application/json
 
 {
-  "name": "Chill Vibesz"
+  "username": "benjamino",
+  "password": "securePassword123"
 }
 
 ###
 
-### Get all playlists for specific user (requires token)
-GET http://localhost:7074/api/v1/playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+
+
+### Login and get JWT token
+POST http://localhost:7074/api/v1/login
 Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+
+### Create a new playlist (requires token)
+POST http://localhost:7074/api/v1/playlists
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+Content-Type: application/json
+
+{
+  "name": "Blandet"
+}
 
 ###
 
 
 ### Add a song to a particular playlist (from external API)
-POST http://localhost:7074/api/v1/playlists/2/songs
-Authorization: Bearer
+POST http://localhost:7074/api/v1/playlists/7/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
 Content-Type: application/json
 
 {
@@ -51,11 +69,76 @@ Content-Type: application/json
   "album": "8 Mile"
 }
 
+###
+
+
+### Add a song to a particular playlist (from external API)
+POST http://localhost:7074/api/v1/playlists/7/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+Content-Type: application/json
+
+{
+  "externalId": 422202502,
+  "title": "Too Good At Goodbyes",
+  "artist": "Sam Smith",
+  "album": "The Thrill Of It All (Special Edition)"
+}
+
+###
+
+### Add a song to a particular playlist (from external API)
+POST http://localhost:7074/api/v1/playlists/7/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+Content-Type: application/json
+
+{
+  "externalId": 70079770,
+  "title": "All of Me",
+  "artist": "John Legend",
+  "album": "Love In The Future (Expanded Edition)"
+}
+
+###
+
+
+### Get all playlists for specific user (requires token)
+GET http://localhost:7074/api/v1/playlists
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+Content-Type: application/json
+
+###
+
 ### Get all songs for a particular playlist
-GET http://localhost:7074/api/v1/playlists/1/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+GET http://localhost:7074/api/v1/playlists/7/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
 Content-Type: application/json
 
 
 ###
+
+### Remove song from particular playlist (User)
+DELETE http://localhost:7074/api/v1/playlists/7/songs/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA3MDI2Niwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.wSa7O250IJwfrTMGpdLENxdmVGGSxoIRVpLliZ4PqBk
+Content-Type: application/json
+
+
 ###
+
+### Delete a particual playlist as user
+DELETE http://localhost:7074/api/v1/playlists/6/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2ODM3OCwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.4k8uVXEFzWhDJLGZq4PSrToJB2imZaG4aQJfSmsjvkw
+Content-Type: application/json
+
+
+###
+### Update playlist name (user)
+PUT http://localhost:7074/api/v1/playlists/7
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA3MTAzMywicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.LCc0ejQj67S_FxAXiZ3m5VLeNHMd6hD8iWKsC_t7rTE
+Content-Type: application/json
+
+{
+  "name": "Evening Chill"
+}
+
+###
+

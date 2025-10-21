@@ -1,5 +1,6 @@
 package app.config;
 
+import app.controllers.AuthController;
 import app.dtos.ErrorResponseDTO;
 import app.enums.Role;
 import app.exceptions.*;
@@ -24,7 +25,7 @@ public class ApplicationConfig {
             config.router.apiBuilder(routes.getRoutes());
         });
 
-        //configureSecurity(app, securityRoutes.getSecurityController());
+        configureSecurity(app, authRoutes.getAuthController());
         configureLogging(app);
         configureExceptionHandling(app);
 
@@ -155,8 +156,8 @@ public class ApplicationConfig {
         });
     }
 
-    /*public static void configureSecurity(Javalin app, SecurityController securityController) {
-        app.beforeMatched(securityController.authenticate());
-        app.beforeMatched(securityController.authorize());
-    }*/
+    public static void configureSecurity(Javalin app, AuthController controller) {
+        app.beforeMatched(controller.authenticate());
+        app.beforeMatched(controller.authorize());
+    }
 }

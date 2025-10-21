@@ -12,11 +12,11 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
-public class SecurityDAO {
+public class AuthDAO {
 
     EntityManagerFactory emf;
 
-    public SecurityDAO(EntityManagerFactory emf) {
+    public AuthDAO(EntityManagerFactory emf) {
         this.emf = emf;
     }
 
@@ -113,7 +113,7 @@ public class SecurityDAO {
 
 
     public static void main(String[] args) {
-        SecurityDAO dao = new SecurityDAO(HibernateConfig.getEntityManagerFactory());
+        AuthDAO dao = new AuthDAO(HibernateConfig.getEntityManagerFactory());
 
         dao.createUser("admin", "admin");
         dao.createUser("User", "User");

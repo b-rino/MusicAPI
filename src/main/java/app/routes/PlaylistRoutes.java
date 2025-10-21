@@ -8,8 +8,7 @@ import app.services.PlaylistService;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
-import static io.javalin.apibuilder.ApiBuilder.get;
-import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class PlaylistRoutes {
 
@@ -26,8 +25,11 @@ public class PlaylistRoutes {
         return () -> {
             post("/playlists", controller::create, Role.USER);
             get("/playlists", controller::getAllPlaylistsForUser, Role.USER);
-            post("playlists/{id}/songs", controller::addSong, Role.USER);
-            get("playlists/{id}/songs", controller::getSongs, Role.USER);
+            post("/playlists/{id}/songs", controller::addSong, Role.USER);
+            get("/playlists/{id}/songs", controller::getSongs, Role.USER);
+            delete("/playlists/{id}", controller::deletePlaylist, Role.USER);
+            delete("/playlists/{playlistId}/songs/{songId}", controller::removeSongFromPlaylist, Role.USER);
+            put("/playlists/{id}", controller::updatePlaylistName, Role.USER);
         };
     }
 }
