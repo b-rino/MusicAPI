@@ -16,14 +16,14 @@ import org.slf4j.LoggerFactory;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class SecurityService {
+public class AuthService {
 
     private final SecurityDAO dao;
     private final SecurityUtils securityUtils;
-    private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
 
-    public SecurityService(SecurityDAO dao, SecurityUtils securityUtils){
+    public AuthService(SecurityDAO dao, SecurityUtils securityUtils){
         this.dao = dao;
         this.securityUtils = securityUtils;
     }

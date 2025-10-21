@@ -4,7 +4,7 @@ import app.dtos.ErrorResponseDTO;
 import app.enums.Role;
 import app.exceptions.*;
 import app.routes.Routes;
-import app.routes.SecurityRoutes;
+import app.routes.AuthRoutes;
 import io.javalin.Javalin;
 import io.javalin.http.UnauthorizedResponse;
 import jakarta.persistence.EntityManagerFactory;
@@ -16,7 +16,7 @@ public class ApplicationConfig {
 
     public static Javalin startServer(int port, EntityManagerFactory emf) {
         Routes routes = new Routes(emf);
-        SecurityRoutes securityRoutes = new SecurityRoutes(emf);
+        AuthRoutes authRoutes = new AuthRoutes(emf);
         Javalin app = Javalin.create(config -> {
             config.showJavalinBanner = false;
             config.bundledPlugins.enableRouteOverview("/routes", Role.ANYONE);
@@ -44,6 +44,17 @@ public class ApplicationConfig {
             logger.warn("Bad request at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(400).json(new ErrorResponseDTO(
                     "Invalid request",
+                    e.getMessage(),
+                    ctx.path(),
+                    ctx.method().toString()
+            ));
+        });
+
+        //TODO: Ændr eventuelt "error" meddelelsen
+        app.exception(ApiException.class, (e, ctx) -> {
+            logger.warn("Handled ApiException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
+            ctx.status(500).json(new ErrorResponseDTO(
+                    "Error trying to fetch data from the API",
                     e.getMessage(),
                     ctx.path(),
                     ctx.method().toString()

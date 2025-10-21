@@ -73,7 +73,7 @@ public class SongDAO implements IDAO<Song, Integer>{
         testSong.setTitle("Test Track");
         testSong.setArtist("Test Artist");
         testSong.setAlbum("Test Album");
-        testSong.setReleaseYear(2025);
+
 
         Song savedSong = dao.create(testSong);
         System.out.println("Saved song" + savedSong.getId());

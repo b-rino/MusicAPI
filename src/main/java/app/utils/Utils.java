@@ -21,10 +21,10 @@ public class Utils {
             if (value != null) {
                 return value.trim();  // Trim whitespace
             } else {
-                throw new ApiException(500, String.format("Property %s not found in %s", propName, resourceName));
+                throw new ApiException(String.format("Property %s not found in %s", propName, resourceName));
             }
         } catch (IOException ex) {
-            throw new ApiException(500, String.format("Could not read property %s.", propName));
+            throw new ApiException(String.format("Could not read property %s.", propName));
         }
     }
 

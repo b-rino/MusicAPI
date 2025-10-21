@@ -1,8 +1,8 @@
 package app.routes;
 
-import app.controllers.SecurityController;
+import app.controllers.AuthController;
 import app.daos.SecurityDAO;
-import app.services.SecurityService;
+import app.services.AuthService;
 import app.utils.SecurityUtils;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,28 +12,24 @@ import jakarta.persistence.EntityManagerFactory;
 import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.post;
 
-public class SecurityRoutes {
+public class AuthRoutes {
 
     private final ObjectMapper mapper;
-    private final SecurityController securityController;
+    private final AuthController authController;
 
-    public SecurityRoutes(EntityManagerFactory emf){
+    public AuthRoutes(EntityManagerFactory emf){
         SecurityDAO dao = new SecurityDAO(emf);
         SecurityUtils securityUtils = new SecurityUtils();
-        SecurityService securityService = new SecurityService(dao, securityUtils);
+        AuthService authService = new AuthService(dao, securityUtils);
         this.mapper = new Utils().getObjectMapper();
-        this.securityController = new SecurityController(securityService, mapper);
+        this.authController = new AuthController(authService, mapper);
     }
 
 
     public EndpointGroup getRoutes() {
         return () -> {
-            post("register", securityController.register());
-            post("login", securityController.login());
-            get("healthcheck", securityController::healthCheck);
+            post("/register", authController.register());
+            post("/login", authController.login());
         };
     }
-
-
-
 }

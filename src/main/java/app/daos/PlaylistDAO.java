@@ -77,14 +77,12 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
         song1.setTitle("Min sang");
         song1.setArtist("B-rabbit");
         song1.setAlbum("B-rabbit Deluxe edition");
-        song1.setReleaseYear(1992);
         songDAO.create(song1);
 
         Song song2 = new Song();
         song2.setTitle("Din sang");
         song2.setArtist("K-rabbit");
         song2.setAlbum("K-rabbit Deluxe edition");
-        song2.setReleaseYear(1993);
         songDAO.create(song2);
 
         Playlist list = new Playlist();
@@ -96,11 +94,9 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
 
 
 
-        User mig = sdao.createUser("Benjamin", "1234");
-        sdao.createRole("User");
-        User userWithRole = sdao.addUserRole("Benjamin", "User");
-        System.out.println("Bruger med rolle: " + userWithRole);
-        User userWithRoleAndPlaylist = sdao.addUserPlaylist("Benjamin", list.getId());
+        User mig = sdao.getVerifiedUser("Benjamino6", "1234");
+        System.out.println("Bruger med rolle: " + mig);
+        User userWithRoleAndPlaylist = sdao.addUserPlaylist(mig.getUsername(), list.getId());
         System.out.println("Bruger med playlist: " + userWithRoleAndPlaylist);
 
 

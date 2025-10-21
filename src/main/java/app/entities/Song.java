@@ -23,6 +23,9 @@ public class Song {
     @Column(nullable = false, unique = true)
     private Integer id;
 
+    @Column(name = "external_id", unique = true, nullable = false)
+    private Integer externalId;
+
     @ToString.Include
     @Column(length = 100, nullable = false)
     private String title;
@@ -32,12 +35,10 @@ public class Song {
     @ToString.Include
     @Column(length = 50)
     private String album;
-    @ToString.Include
-    private Integer releaseYear;
+/*    @ToString.Include         external API doesn't have release year!?
+    private Integer releaseYear;*/
 
     @ManyToMany(mappedBy = "songs")
     private Set<Playlist> playlists = new HashSet();
-
-
 
 }

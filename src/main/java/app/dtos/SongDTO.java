@@ -9,13 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SongDTO {
 
-    private String externalId;
+    private Integer id;
+    private Integer externalId;
     private String title;
     private String artist;
     private String album;
-    private Integer releaseYear;
 
 }
