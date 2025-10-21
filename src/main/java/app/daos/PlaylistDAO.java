@@ -4,10 +4,13 @@ import app.config.HibernateConfig;
 import app.entities.Playlist;
 import app.entities.Song;
 import app.entities.User;
+import app.exceptions.EntityNotFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.TypedQuery;
 
 import java.util.List;
+import java.util.Set;
 
 public class PlaylistDAO implements IDAO <Playlist, Integer> {
 
@@ -84,6 +87,63 @@ public class PlaylistDAO implements IDAO <Playlist, Integer> {
                     .getResultList();
         }
     }
+
+    public Playlist addSongToPlaylist(int playlistId, Song song) {
+        try (EntityManager em = emf.createEntityManager()) {
+            em.getTransaction().begin();
+
+            Playlist playlist = em.find(Playlist.class, playlistId);
+            if (playlist == null) {
+                throw new EntityNotFoundException("Playlist not found");
+            }
+
+
+            TypedQuery<Song> query = em.createQuery(
+                    "SELECT s FROM Song s WHERE s.externalId = :externalId", Song.class);
+            query.setParameter("externalId", song.getExternalId());
+            List<Song> existing = query.getResultList();
+
+            Song songToAdd = existing.isEmpty() ? song : existing.get(0);
+            playlist.getSongs().add(songToAdd);
+
+            if (existing.isEmpty()) {
+                em.persist(songToAdd);
+            }
+
+            Playlist updatedList = em.merge(playlist);
+            em.getTransaction().commit();
+            return updatedList;
+        }
+    }
+
+
+    public Set<Song> getSongsByPlaylistId(int playlistId) {
+        try (EntityManager em = emf.createEntityManager()) {
+            Playlist playlist = em.createQuery(
+                            "SELECT p FROM Playlist p LEFT JOIN FETCH p.songs WHERE p.id = :id", Playlist.class)
+                    .setParameter("id", playlistId)
+                    .getSingleResult();
+
+            return playlist.getSongs();
+        }
+    }
+
+
+    public Playlist getByIdWithOwner(int id) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery(
+                            "SELECT p FROM Playlist p LEFT JOIN FETCH p.songs LEFT JOIN FETCH p.owner WHERE p.id = :id",
+                            Playlist.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        }
+    }
+
+
+
+
+
+
 
 
     public static void main(String[] args) {

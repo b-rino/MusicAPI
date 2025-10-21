@@ -25,7 +25,9 @@ public class PlaylistRoutes {
     public EndpointGroup getRoutes() {
         return () -> {
             post("/playlists", controller::create, Role.USER);
-            get("playlists", controller::getAllPlaylistsForUser, Role.USER);
+            get("/playlists", controller::getAllPlaylistsForUser, Role.USER);
+            post("playlists/{id}/songs", controller::addSong, Role.USER);
+            get("playlists/{id}/songs", controller::getSongs, Role.USER);
         };
     }
 }

@@ -1,9 +1,13 @@
 package app.controllers;
 
 import app.daos.UserDAO;
+import app.dtos.AddSongDTO;
 import app.dtos.CreatePlaylistDTO;
 import app.dtos.PlaylistDTO;
+import app.dtos.SongDTO;
+import app.entities.Playlist;
 import app.entities.User;
+import app.exceptions.ValidationException;
 import app.services.PlaylistService;
 import app.utils.SecurityUtils;
 import io.javalin.http.Context;
@@ -47,4 +51,24 @@ public class PlaylistController {
         ctx.json(playlists);
 
     }
+
+
+    public void addSong(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("id"));
+        AddSongDTO dto = ctx.bodyAsClass(AddSongDTO.class);
+
+        PlaylistDTO updated = service.addSong(playlistId, dto);
+        ctx.status(200).json(updated);
+    }
+
+    public void getSongs(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("id"));
+        String username = SecurityUtils.getUsernameFromToken(ctx.header("Authorization").replace("Bearer ", ""));
+
+        List<SongDTO> songs = service.getSongsForUserPlaylist(playlistId, username);
+        ctx.json(songs);
+    }
+
+
+
 }

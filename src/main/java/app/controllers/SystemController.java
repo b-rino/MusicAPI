@@ -20,6 +20,7 @@ public class SystemController {
     }
 
 
+    //TODO: Refactor til SongController
     public void searchExternal(Context ctx) {
         String query = ctx.queryParam("query");
         if (query == null || query.isBlank()) {
@@ -30,6 +31,10 @@ public class SystemController {
 
         ctx.status(200).json(result);
     }
+
+
+
+
 
 
 }

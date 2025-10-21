@@ -39,7 +39,23 @@ Content-Type: application/json
 ###
 
 
+### Add a song to a particular playlist (from external API)
+POST http://localhost:7074/api/v1/playlists/2/songs
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "externalId": 123456,
+  "title": "Lose Yourself",
+  "artist": "Eminem",
+  "album": "8 Mile"
+}
+
+### Get all songs for a particular playlist
+GET http://localhost:7074/api/v1/playlists/1/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWluIiwiZXhwIjoxNzYxMDM4MDM5LCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6ImJlbmphbWluIn0.JdZiJgl1qlPRRxjo_LxvVnYbGnb5wweBq71WHNFl9t0
+Content-Type: application/json
+
+
 ###
-
-
 ###

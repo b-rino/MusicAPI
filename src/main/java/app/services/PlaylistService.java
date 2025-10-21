@@ -1,11 +1,14 @@
 package app.services;
 
 import app.daos.PlaylistDAO;
+import app.dtos.AddSongDTO;
 import app.dtos.PlaylistDTO;
 import app.dtos.SongDTO;
 import app.entities.Playlist;
+import app.entities.Song;
 import app.entities.User;
 import app.exceptions.EntityAlreadyExistsException;
+import app.exceptions.ValidationException;
 
 import java.util.List;
 import java.util.Set;
@@ -51,5 +54,39 @@ public class PlaylistService {
                         .build())
                 .collect(Collectors.toList());
     }
+
+
+    public PlaylistDTO addSong(int playlistId, AddSongDTO dto) {
+        Song song = new Song();
+        song.setExternalId(dto.getExternalId());
+        song.setTitle(dto.getTitle());
+        song.setArtist(dto.getArtist());
+        song.setAlbum(dto.getAlbum());
+
+        Playlist updated = dao.addSongToPlaylist(playlistId, song);
+
+        return PlaylistDTO.builder()
+                .id(updated.getId())
+                .name(updated.getName())
+                .username(updated.getOwner().getUsername())
+                .songs(updated.getSongs().stream().map(SongDTO::new).collect(Collectors.toSet()))
+                .build();
+    }
+
+    public List<SongDTO> getSongsForPlaylist(int playlistId) {
+        Set<Song> songs = dao.getSongsByPlaylistId(playlistId);
+        return songs.stream().map(SongDTO::new).toList();
+    }
+
+    public List<SongDTO> getSongsForUserPlaylist(int playlistId, String username) {
+        Playlist playlist = dao.getByIdWithOwner(playlistId);
+        if (playlist == null || !playlist.getOwner().getUsername().equals(username)) {
+            throw new ValidationException("You do not own this playlist");
+        }
+        return playlist.getSongs().stream().map(SongDTO::new).toList();
+    }
+
+
+
 
 }
