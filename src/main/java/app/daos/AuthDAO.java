@@ -99,6 +99,10 @@ public class AuthDAO {
     }
 
 
+
+
+
+
     //TODO: Bliver denne metode brugt i sidste ende?
     public boolean existingUsername(String username) throws EntityAlreadyExistsException {
         try(EntityManager em = emf.createEntityManager()){

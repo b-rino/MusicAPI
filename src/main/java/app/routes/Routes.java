@@ -31,7 +31,7 @@ public class Routes {
             path("", systemRoutes.getRoutes());
             path("", authRoutes.getRoutes());
             path("", playlistRoutes.getRoutes());
-            path("", adminRoutes.getRoutes());
+            path("admin", adminRoutes.getRoutes()); //Da det kun er for admin's bryder jeg med den "normale" struktur
         } ;
     }
 }

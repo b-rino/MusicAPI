@@ -31,7 +31,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_name"))
     private Set<Role> roles = new HashSet();
 
-    @OneToMany(mappedBy = "owner")
+    //We want to delete a users playlists when the user gets deleted!
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private Set<Playlist> playlists = new HashSet();
 
 

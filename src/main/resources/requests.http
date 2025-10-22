@@ -3,7 +3,7 @@ POST http://localhost:7074/api/v1/register
 Content-Type: application/json
 
 {
-  "username": "benjamin",
+  "username": "benjamino",
   "password": "securePassword123"
 }
 
@@ -47,19 +47,19 @@ Content-Type: application/json
 
 ### Create a new playlist (requires token)
 POST http://localhost:7074/api/v1/playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODA0NCwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xZtaunqMImRED4OZ86Ss2V5TqkvEx7PwLuRecmRLFpo
 Content-Type: application/json
 
 {
-  "name": "Blandet"
+  "name": "Workout"
 }
 
 ###
 
 
 ### Add a song to a particular playlist (from external API)
-POST http://localhost:7074/api/v1/playlists/7/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+POST http://localhost:7074/api/v1/playlists/9/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODE5Niwicm9sZXMiOiJVc2VyLEFkbWluIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xMDMQ3EI_iQEhBNJ4V3v5tb8ieeseEtkFBfU1uyeQkk
 Content-Type: application/json
 
 {
@@ -73,8 +73,8 @@ Content-Type: application/json
 
 
 ### Add a song to a particular playlist (from external API)
-POST http://localhost:7074/api/v1/playlists/7/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+POST http://localhost:7074/api/v1/playlists/9/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODA0NCwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xZtaunqMImRED4OZ86Ss2V5TqkvEx7PwLuRecmRLFpo
 Content-Type: application/json
 
 {
@@ -87,8 +87,8 @@ Content-Type: application/json
 ###
 
 ### Add a song to a particular playlist (from external API)
-POST http://localhost:7074/api/v1/playlists/7/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTA2OTU0OSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.HjpmCczIoRanHXCNzehnAbpPxl1iKg-GJNUraHss6ts
+POST http://localhost:7074/api/v1/playlists/9/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODE5Niwicm9sZXMiOiJVc2VyLEFkbWluIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xMDMQ3EI_iQEhBNJ4V3v5tb8ieeseEtkFBfU1uyeQkk
 Content-Type: application/json
 
 {
@@ -145,8 +145,34 @@ Content-Type: application/json
 
 
 ### Get all users (require admin role)
-GET http://localhost:7074/api/v1/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyMzMwNSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.Xfz2YcpOMoJCo4D_mRdusYANzppFBjFeBkSnoS-egCg
+GET http://localhost:7074/api/v1/admin/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODE5Niwicm9sZXMiOiJVc2VyLEFkbWluIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xMDMQ3EI_iQEhBNJ4V3v5tb8ieeseEtkFBfU1uyeQkk
 Content-Type: application/json
+
+###
+
+### Delete by username (require admin role)
+DELETE http://localhost:7074/api/v1/admin/users/benjamin
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzYxMTI1NDQzLCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9.Qh6_B82pRya1shyqp3EX07wSplVikENk5GcjRX7KhSM
+Content-Type: application/json
+
+###
+
+
+### Get all songs from own db (require admin role)
+GET http://localhost:7074/api/v1/admin/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyODE5Niwicm9sZXMiOiJVc2VyLEFkbWluIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.xMDMQ3EI_iQEhBNJ4V3v5tb8ieeseEtkFBfU1uyeQkk
+Content-Type: application/json
+
+###
+
+### Add role to user (require admin role)
+PATCH http://localhost:7074/api/v1/admin/users/benjamino/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzYxMTI3NTk3LCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9.CtKFg8h7JQSO-Xfe6x1-CcDoQ8bDUNUEBnyTjpQou7M
+Content-Type: application/json
+
+{
+  "roleName": "Admin"
+}
 
 ###
