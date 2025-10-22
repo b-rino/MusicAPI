@@ -2,6 +2,7 @@ package app.routes;
 
 import app.controllers.AuthController;
 import app.daos.AuthDAO;
+import app.enums.Role;
 import app.services.AuthService;
 import app.utils.SecurityUtils;
 import app.utils.Utils;
@@ -28,8 +29,8 @@ public class AuthRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            post("/register", authController.register());
-            post("/login", authController.login());
+            post("/register", authController.register(), Role.ANYONE);
+            post("/login", authController.login(), Role.ANYONE);
         };
     }
 
