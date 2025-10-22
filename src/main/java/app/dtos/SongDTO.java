@@ -20,6 +20,8 @@ public class SongDTO {
     private String artist;
     private String album;
 
+
+
     public SongDTO(Song song) {
         this.id = song.getId();
         this.externalId = song.getExternalId();

@@ -15,20 +15,23 @@ public class Routes {
     private final AuthRoutes authRoutes;
     private final SystemRoutes systemRoutes;
     private final PlaylistRoutes playlistRoutes;
+    private final AdminRoutes adminRoutes;
 
     public Routes(EntityManagerFactory emf){
         DeezerClient dc = new DeezerClient();
         this.authRoutes = new AuthRoutes(emf);
         this.systemRoutes = new SystemRoutes(dc);
         this.playlistRoutes = new PlaylistRoutes(emf);
+        this.adminRoutes = new AdminRoutes(emf);
     }
 
     public EndpointGroup getRoutes(){
         return () -> {
-            get("/", ctx -> ctx.result("Hello World!"));
+            get("/", ctx -> ctx.result("Welcome to the MusicAPI. Please visit /routes to see available routes"));
             path("", systemRoutes.getRoutes());
             path("", authRoutes.getRoutes());
             path("", playlistRoutes.getRoutes());
+            path("", adminRoutes.getRoutes());
         } ;
     }
 }

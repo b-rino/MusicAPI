@@ -142,3 +142,11 @@ Content-Type: application/json
 
 ###
 
+
+
+### Get all users (require admin role)
+GET http://localhost:7074/api/v1/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImJlbmphbWlubyIsImV4cCI6MTc2MTEyMzMwNSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJiZW5qYW1pbm8ifQ.Xfz2YcpOMoJCo4D_mRdusYANzppFBjFeBkSnoS-egCg
+Content-Type: application/json
+
+###

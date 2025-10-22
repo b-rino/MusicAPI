@@ -14,11 +14,23 @@ public class UserDAO {
         this.emf = emf;
     }
 
-    public List<User> getAllUseers() {
+    public List<User> getAllUsers() {
         try(EntityManager em = emf.createEntityManager()){
             return em.createQuery("FROM User", User.class).getResultList();
         }
     }
+    public List<User> getAllUsersWithRolesAndPlaylists() {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery(
+                    "SELECT DISTINCT u FROM User u " +
+                            "LEFT JOIN FETCH u.roles " +
+                            "LEFT JOIN FETCH u.playlists p " +
+                            "LEFT JOIN FETCH p.songs",
+                    User.class
+            ).getResultList();
+        }
+    }
+
 
     public User findByUsername(String username) {
         try (EntityManager em = emf.createEntityManager()) {

@@ -21,7 +21,7 @@ import java.util.Set;
 public class UserDTO {
 
     private String username;
-    private String password;
+    //private String password;
     private Set<String> roles = new HashSet();
     private Set<PlaylistDTO> playlists = new HashSet();
 
@@ -46,6 +46,6 @@ public class UserDTO {
 
     @Override
     public String toString() {
-        return "User with username: " + username + " and roles: " + roles;
+        return "User with username: " + username + " and roles: " + roles + " and playlists: " + playlists;
     }
 }
