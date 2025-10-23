@@ -28,7 +28,7 @@ public class Routes {
     public EndpointGroup getRoutes(){
         return () -> {
             get("/", ctx -> ctx.result("Welcome to the MusicAPI. Please visit /routes to see available routes"));
-            path("", systemRoutes.getRoutes());
+            systemRoutes.getRoutes();
             path("", authRoutes.getRoutes());
             path("", playlistRoutes.getRoutes());
             path("admin", adminRoutes.getRoutes()); //Da det kun er for admin's bryder jeg med den "normale" struktur
