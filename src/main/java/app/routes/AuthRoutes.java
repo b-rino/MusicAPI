@@ -29,8 +29,8 @@ public class AuthRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            post("/register", authController.register(), Role.ANYONE);
-            post("/login", authController.login(), Role.ANYONE);
+            post("register", authController.register(), Role.ANYONE);
+            post("login", authController.login(), Role.ANYONE);
         };
     }
 

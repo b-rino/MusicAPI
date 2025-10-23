@@ -19,8 +19,8 @@ public class SystemRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            get("/healthcheck", controller::healthCheck, Role.ANYONE);
-            get("/songs/search", controller::searchExternal, Role.ANYONE);
+            get("healthcheck", controller::healthCheck, Role.ANYONE);
+            get("songs/search", controller::searchExternal, Role.ANYONE);
         };
     }
 }

@@ -23,13 +23,13 @@ public class PlaylistRoutes {
 
     public EndpointGroup getRoutes() {
         return () -> {
-            post("/playlists", controller::create, Role.USER);
-            get("/playlists", controller::getAllPlaylistsForUser, Role.USER);
-            post("/playlists/{id}/songs", controller::addSong, Role.USER);
-            get("/playlists/{id}/songs", controller::getSongs, Role.USER);
-            delete("/playlists/{id}", controller::deletePlaylist, Role.USER);
-            delete("/playlists/{playlistId}/songs/{songId}", controller::removeSongFromPlaylist, Role.USER);
-            put("/playlists/{id}", controller::updatePlaylistName, Role.USER);
+            post("playlists", controller::create, Role.USER);
+            get("playlists", controller::getAllPlaylistsForUser, Role.USER);
+            post("playlists/{id}/songs", controller::addSong, Role.USER);
+            get("playlists/{id}/songs", controller::getSongs, Role.USER);
+            delete("playlists/{id}", controller::deletePlaylist, Role.USER);
+            delete("playlists/{playlistId}/songs/{songId}", controller::removeSongFromPlaylist, Role.USER);
+            put("playlists/{id}", controller::updatePlaylistName, Role.USER);
         };
     }
 }
