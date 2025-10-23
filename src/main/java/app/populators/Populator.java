@@ -30,6 +30,7 @@ public class Populator {
         AuthDAO dao = new AuthDAO(emf);
         seededUsers.clear();
 
+        //First three User's are used in tests and last two are used in requests.http for both local and live!
         User user = dao.createUser("user1", "test123");
         dao.addUserRole(user.getUsername(), "User");
 
@@ -38,6 +39,12 @@ public class Populator {
 
         User admin = dao.createUser("admin", "admin123");
         dao.addUserRole(admin.getUsername(), "Admin");
+
+        User userLiveVersion = dao.createUser("User", "User");
+        dao.addUserRole(userLiveVersion.getUsername(), "User");
+
+        User adminLiveVersion = dao.createUser("Admin", "Admin");
+        dao.addUserRole(adminLiveVersion.getUsername(), "Admin");
 
         seededUsers.addAll(List.of(user, user2, admin));
         System.out.println("Seeded users: " + seededUsers.stream().map(User::getUsername).collect(Collectors.toList()));

@@ -42,7 +42,6 @@ public class HibernateConfig {
         return emfTest;
     }
 
-    // TODO: IMPORTANT: Add Entity classes here for them to be registered with Hibernate
     private static void getAnnotationConfiguration(Configuration configuration) {
         configuration.addAnnotatedClass(Song.class);
         configuration.addAnnotatedClass(User.class);

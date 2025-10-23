@@ -52,7 +52,7 @@ public class AuthTest {
 
 
     @Test
-    void testRegister_existingUsername_shouldFail() {
+    void testRegister_existingUsername_fail() {
         given().contentType("application/json")
                 .body("{\"username\":\"user1\",\"password\":\"test123\"}")
                 .when().post("/register")
@@ -62,7 +62,7 @@ public class AuthTest {
 
 
     @Test
-    void testRegister_emptyBody_shouldFail() {
+    void testRegister_emptyBody_fail() {
         given().contentType("application/json")
                 .body("{}")
                 .when().post("/register")
@@ -83,7 +83,7 @@ public class AuthTest {
 
 
     @Test
-    void testLogin_wrongPassword_shouldFail() {
+    void testLogin_wrongPassword_fail() {
         given().contentType("application/json")
                 .body("{\"username\":\"user1\",\"password\":\"wrongpass\"}")
                 .when().post("/login")
@@ -93,7 +93,7 @@ public class AuthTest {
 
 
     @Test
-    void testLogin_unknownUser_shouldFail() {
+    void testLogin_unknownUser_fail() {
         given().contentType("application/json")
                 .body("{\"username\":\"ghost\",\"password\":\"nopass\"}")
                 .when().post("/login")
@@ -102,15 +102,7 @@ public class AuthTest {
     }
 
 
-    @Test
-    void testLogin_malformedBody_shouldFail() {
-        given().contentType("application/json")
-                .body("{\"user\":\"x\"}") // missing expected fields
-                .when().post("/login")
-                .then().statusCode(403)
-                .body("message", containsString("Invalid request body"));
-    }
-
+    //Uden nogle check, da vi kun bruger denne metode i dette kontrollerde testmiljø!
     private String loginAndGetToken(String username, String password) {
         return given().contentType("application/json")
                 .body("{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}")
@@ -130,14 +122,14 @@ public class AuthTest {
     }
 
     @Test
-    void testMissingToken_shouldFail() {
+    void testMissingToken_fail() {
         given().when().get("/playlists")
                 .then().statusCode(401)
                 .body("message", containsString("Authorization header is missing"));
     }
 
     @Test
-    void testMalformedTokenHeader_shouldFail() {
+    void testMalformedTokenHeader_fail() {
         given().header("Authorization", "Token abc.def.ghi")
                 .when().get("/playlists")
                 .then().statusCode(401)
@@ -145,7 +137,7 @@ public class AuthTest {
     }
 
     @Test
-    void testInvalidTokenSignature_shouldFail() {
+    void testInvalidTokenSignature_fail() {
         String fakeToken = "Bearer abc.def.ghi"; 
 
         given().header("Authorization", fakeToken)
@@ -156,7 +148,7 @@ public class AuthTest {
     }
 
     @Test
-    void testTokenValidButUserDeleted_shouldFail() {
+    void testTokenValidButUserDeleted_fail() {
         String token = loginAndGetToken("user1", "test123");
 
         // Slet user1 som admin

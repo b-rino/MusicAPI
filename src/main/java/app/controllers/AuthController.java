@@ -85,7 +85,7 @@ public class AuthController {
             Set<String> allowedRoles = ctx.routeRoles().stream().
                     map(role -> role.toString().toUpperCase()).collect(Collectors.toSet());
 
-            //If the endpoint is not protected with roles (or open to role ANYONE) then skip
+            //Hvis endpoint har rollen Role.ANYONE skipper vi!
             if(SecurityUtils.isOpenEndpoint(allowedRoles))
                 return;
 

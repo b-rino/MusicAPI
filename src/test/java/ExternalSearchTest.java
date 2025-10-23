@@ -53,7 +53,7 @@ public class ExternalSearchTest {
 
 
     @Test
-    void testSearchExternal_missingQuery_shouldFail() {
+    void testSearchExternal_missingQuery_fail() {
         given().when().get("/songs/search")
                 .then().statusCode(400)
                 .body("message", containsString("Missing query parameter"));

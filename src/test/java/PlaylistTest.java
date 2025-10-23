@@ -65,14 +65,14 @@ public class PlaylistTest {
     void testGetAllPlaylistsForUser_success() {
         String token = loginAndGetToken("user1", "test123");
 
-        // Opret playlist
+
         given().header("Authorization", "Bearer " + token)
                 .contentType("application/json")
                 .body("{\"name\":\"Workout Mix\"}")
                 .when().post("/playlists")
                 .then().statusCode(201);
 
-        // Hent alle
+
         given().header("Authorization", "Bearer " + token)
                 .when().get("/playlists")
                 .then().statusCode(200)
@@ -196,7 +196,7 @@ public class PlaylistTest {
 
 
     @Test
-    void testCreatePlaylist_missingName_Fail() {
+    void testCreatePlaylist_missingName_fail() {
         String token = loginAndGetToken("user1", "test123");
 
         given().header("Authorization", "Bearer " + token)
@@ -228,8 +228,8 @@ public class PlaylistTest {
     }
 
     @Test
-    void testAddSongToOthersPlaylist_Fail() {
-        // Opret to forskellige brugere med USER-rolle
+    void testAddSongToOthersPlaylist_fail() {
+        // Oprettelse af to forskellige brugere med User-role
         String ownerToken = loginAndGetToken("user2", "test321"); // ejer af playlist
         String otherUserToken = loginAndGetToken("user1", "test123"); // forsøger at tilføje sang
 
@@ -254,7 +254,7 @@ public class PlaylistTest {
 
 
     @Test
-    void testRemoveNonexistentSong_shouldFail() {
+    void testRemoveNonexistentSong_fail() {
         String token = loginAndGetToken("user1", "test123");
 
         int playlistId = given().header("Authorization", "Bearer " + token)
@@ -273,7 +273,7 @@ public class PlaylistTest {
 
 
     @Test
-    void testDeleteOthersPlaylist_shouldFail() {
+    void testDeleteOthersPlaylist_fail() {
         String adminToken = loginAndGetToken("user2", "test321");
         String userToken = loginAndGetToken("user1", "test123");
 
@@ -287,12 +287,12 @@ public class PlaylistTest {
                 .pathParam("id", playlistId)
                 .when().delete("/playlists/{id}")
                 .then().statusCode(403)
-                .body("message", containsString("do not own this playlist"));
+                .body("message", containsString("You do not own this playlist"));
     }
 
 
     @Test
-    void testUpdateOthersPlaylistName_shouldFail() {
+    void testUpdateOthersPlaylistName_fail() {
         String adminToken = loginAndGetToken("user2", "test321");
         String userToken = loginAndGetToken("user1", "test123");
 
@@ -308,7 +308,7 @@ public class PlaylistTest {
                 .body("{\"name\":\"Hacked\"}")
                 .when().put("/playlists/{id}")
                 .then().statusCode(403)
-                .body("message", containsString("do not own this playlist"));
+                .body("message", containsString("You do not own this playlist"));
     }
 
 

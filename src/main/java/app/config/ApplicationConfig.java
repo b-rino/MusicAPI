@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationConfig {
+
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class);
 
     public static Javalin startServer(int port, EntityManagerFactory emf) {
@@ -37,7 +38,7 @@ public class ApplicationConfig {
         app.stop();
     }
 
-
+    //Global exception handling med JSON-respons (og brug af en DTO for nemhedens skyld)
     private static void configureExceptionHandling(Javalin app) {
 
         app.exception(IllegalStateException.class, (e, ctx) -> {
@@ -135,6 +136,7 @@ public class ApplicationConfig {
     }
 
 
+    //Global logging configuration, til overordnet logging for hver request/response
     private static void configureLogging(Javalin app) {
         app.before(ctx -> {
             logger.info("Incoming request: [{}] {} at {}", ctx.method(), ctx.path(), java.time.LocalDateTime.now());
@@ -154,6 +156,7 @@ public class ApplicationConfig {
         });
     }
 
+    //Middleware der sikrer at der bliver foretage tjek på roller og token FØR man bliver lukket ind på route!
     public static void configureSecurity(Javalin app, AuthController controller) {
         app.beforeMatched(controller.authenticate());
         app.beforeMatched(controller.authorize());

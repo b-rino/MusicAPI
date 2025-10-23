@@ -44,7 +44,7 @@ public class AdminTest {
         ApplicationConfig.stopServer(app);
     }
 
-    // Helper
+
     private String loginAndGetToken(String username, String password) {
         return given().contentType("application/json")
                 .body("{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}")
@@ -53,10 +53,9 @@ public class AdminTest {
                 .extract().path("token");
     }
 
-    // Tests
 
     @Test
-    void testGetAllUsers_asAdmin() {
+    void testGetAllUsers_Admin() {
         String token = loginAndGetToken("admin", "admin123");
 
         given().header("Authorization", "Bearer " + token)
@@ -85,7 +84,7 @@ public class AdminTest {
     }
 
     @Test
-    void testDeleteUser_selfDeletion_forbidden() {
+    void testDeleteUser_selfDelete_fail() {
         String token = loginAndGetToken("admin", "admin123");
 
         given().header("Authorization", "Bearer " + token)
@@ -131,7 +130,7 @@ public class AdminTest {
         given().header("Authorization", "Bearer " + token)
                 .contentType("application/json")
                 .pathParam("username", "roleuser")
-                .body("{\"roleName\":\"User\"}")
+                .body("{\"roleName\":\"Admin\"}")
                 .when().patch("/admin/users/{username}/role")
                 .then().statusCode(200)
                 .body("message", containsString("Role succesfully granted"));

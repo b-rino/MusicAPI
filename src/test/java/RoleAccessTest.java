@@ -49,7 +49,7 @@ public class RoleAccessTest {
     }
 
     @Test
-    void testUserAccessingAdminEndpoint_shouldFail() {
+    void testUserAccessingAdminEndpoint_fail() {
         String token = loginAndGetToken("user1", "test123");
 
         given().header("Authorization", "Bearer " + token)
@@ -59,7 +59,7 @@ public class RoleAccessTest {
     }
 
     @Test
-    void testAdminAccessingUserEndpoint_shouldFail() {
+    void testAdminAccessingUserEndpoint_fail() {
         String token = loginAndGetToken("admin", "admin123");
 
         given().header("Authorization", "Bearer " + token)
@@ -71,7 +71,7 @@ public class RoleAccessTest {
     }
 
     @Test
-    void testUnauthenticatedAccess_shouldFail() {
+    void testUnauthenticatedAccess_fail() {
         given().when().get("/admin/users")
                 .then().statusCode(401)
                 .body("message", containsString("Authorization header is missing"));
