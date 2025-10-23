@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +29,8 @@ public class DeezerClient {
     }
 
     public List<SongDTO> searchSong(String query){
-        String url = "https://api.deezer.com/search?q=" + query;
+        String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        String url = "https://api.deezer.com/search?q=" + encodedQuery;
 
         String json = httpGet(url);
         try {

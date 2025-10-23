@@ -30,19 +30,22 @@ public class AuthController {
     public Handler register() {
         return ctx -> {
             User incomingUser = ctx.bodyAsClass(User.class);
-            if(incomingUser != null){
-                UserDTO userDTO = authService.register(incomingUser.getUsername(), incomingUser.getPassword());
 
-                ObjectNode on = mapper.createObjectNode()
-                        .put("msg", "User successfully created. Please log in")
-                        .put("username", userDTO.getUsername());
-
-                ctx.json(on).status(201);
-            } else {
-                throw new ValidationException("Could not create user");
+            if (incomingUser == null || incomingUser.getUsername() == null || incomingUser.getPassword() == null ||
+                    incomingUser.getUsername().isBlank() || incomingUser.getPassword().isBlank()) {
+                throw new IllegalStateException("Username and password are required");
             }
+
+            UserDTO userDTO = authService.register(incomingUser.getUsername(), incomingUser.getPassword());
+
+            ObjectNode on = mapper.createObjectNode()
+                    .put("msg", "User successfully created. Please log in")
+                    .put("username", userDTO.getUsername());
+
+            ctx.json(on).status(201);
         };
     }
+
 
     public Handler login(){
         return ctx -> {

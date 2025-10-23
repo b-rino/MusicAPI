@@ -33,10 +33,13 @@ public class Populator {
         User user = dao.createUser("user1", "test123");
         dao.addUserRole(user.getUsername(), "User");
 
+        User user2 = dao.createUser("user2", "test321");
+        dao.addUserRole(user2.getUsername(), "User");
+
         User admin = dao.createUser("admin", "admin123");
         dao.addUserRole(admin.getUsername(), "Admin");
 
-        seededUsers.addAll(List.of(user, admin));
+        seededUsers.addAll(List.of(user, user2, admin));
         System.out.println("Seeded users: " + seededUsers.stream().map(User::getUsername).collect(Collectors.toList()));
     }
 

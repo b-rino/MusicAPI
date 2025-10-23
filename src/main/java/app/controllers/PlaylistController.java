@@ -29,7 +29,7 @@ public class PlaylistController {
         CreatePlaylistDTO dto = ctx.bodyAsClass(CreatePlaylistDTO.class);
 
         if(dto.getName() == null || dto.getName().isBlank()){
-            throw new IllegalArgumentException("Playlist name is required");
+            throw new IllegalStateException("Playlist name is required");
         }
 
         String token = ctx.header("Authorization").replace("Bearer", "");

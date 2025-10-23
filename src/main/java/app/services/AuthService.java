@@ -122,7 +122,7 @@ public class AuthService {
         return parts[1];
     }
 
-    public UserDTO validateAndGetUserFromToken(Context ctx) throws TokenVerificationException  {
+    public UserDTO validateAndGetUserFromToken(Context ctx) throws TokenVerificationException {
         String token = getToken(ctx);
         UserDTO verifiedTokenUser = verifyToken(token);
 
@@ -130,8 +130,15 @@ public class AuthService {
             logger.warn("Token verified but no user found at [{}] {}", ctx.method().toString(), ctx.path());
             throw new TokenVerificationException("Token is valid but user could not be resolved");
         }
+
+        if (!dao.existingUsername(verifiedTokenUser.getUsername())) {
+            logger.warn("Token references deleted user '{}' at [{}] {}", verifiedTokenUser.getUsername(), ctx.method(), ctx.path());
+            throw new TokenVerificationException("Token is valid but user could not be resolved");
+        }
+
         return verifiedTokenUser;
     }
+
 
 
     public boolean userHasAllowedRole(UserDTO user, Set<String> allowedRoles) {
