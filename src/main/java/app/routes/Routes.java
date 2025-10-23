@@ -27,21 +27,11 @@ public class Routes {
 
     public EndpointGroup getRoutes(){
         return () -> {
-            get("/", ctx -> ctx.result("Welcome to the MusicAPI. Please visit /routes to see available routes"));
-            systemRoutes.getRoutes();
+            get("/", ctx -> ctx.result("Welcome to the MusicAPI. Please visit 'music.brino.dk/api/v1routes' to see available routes"));
+            path("", systemRoutes.getRoutes());
             path("", authRoutes.getRoutes());
             path("", playlistRoutes.getRoutes());
             path("admin", adminRoutes.getRoutes()); //Da det kun er for admin's bryder jeg med den "normale" struktur
         } ;
     }
 }
-
-
-
-
-
-
-/*            get("/users", ctx ->{
-                List<UserDTO> users = userService.getAllUsers();
-                ctx.json(users);
-            } , Role.ADMIN);*/

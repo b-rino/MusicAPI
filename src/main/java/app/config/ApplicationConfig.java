@@ -40,7 +40,6 @@ public class ApplicationConfig {
 
     private static void configureExceptionHandling(Javalin app) {
 
-        //TODO: Ændr Invalid request til noget mere sigende!
         app.exception(IllegalStateException.class, (e, ctx) -> {
             logger.warn("Bad request at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(400).json(new ErrorResponseDTO(
@@ -51,7 +50,6 @@ public class ApplicationConfig {
             ));
         });
 
-        //TODO: Ændr eventuelt "error" meddelelsen
         app.exception(ApiException.class, (e, ctx) -> {
             logger.warn("Handled ApiException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(500).json(new ErrorResponseDTO(
@@ -65,8 +63,8 @@ public class ApplicationConfig {
 
         app.exception(ValidationException.class, (e, ctx) -> {
             logger.warn("Handled ValidationException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
-            ctx.status(400).json(new ErrorResponseDTO(
-                    "User not verified",
+            ctx.status(403).json(new ErrorResponseDTO(
+                    "Access denied",
                     e.getMessage(),
                     ctx.path(),
                     ctx.method().toString()
