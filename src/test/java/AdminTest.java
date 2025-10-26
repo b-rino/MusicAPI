@@ -102,7 +102,7 @@ public class AdminTest {
                 .pathParam("username", "ghost")
                 .when().delete("/admin/users/{username}")
                 .then().statusCode(404)
-                .body("message", containsString("was not found"));
+                .body("message", containsString("Couldn't find user in database"));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class AdminTest {
                 .body("{\"roleName\":\"User\"}")
                 .when().patch("/admin/users/{username}/role")
                 .then().statusCode(404)
-                .body("message", containsString("User not found"));
+                .body("message", containsString("Couldn't find user in database"));
     }
 
     @Test
