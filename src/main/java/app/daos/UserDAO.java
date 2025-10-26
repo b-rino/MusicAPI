@@ -44,7 +44,7 @@ public class UserDAO {
                     .setParameter("username", username)
                     .getSingleResult();
         } catch (NoResultException e) {
-            return null;
+            throw new EntityNotFoundException("Couldn't find user in database");
         }
     }
 

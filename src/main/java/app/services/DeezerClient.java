@@ -61,7 +61,7 @@ public class DeezerClient {
 
 
 
-    //performs an authenticated get request to the Deezer api
+    //performs a get request to the Deezer api (Open to ANYONE so no Authorization header)
     private String httpGet(String url) {
         try {
             HttpRequest request = HttpRequest.newBuilder()

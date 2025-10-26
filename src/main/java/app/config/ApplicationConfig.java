@@ -54,7 +54,7 @@ public class ApplicationConfig {
         app.exception(ApiException.class, (e, ctx) -> {
             logger.warn("Handled ApiException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
             ctx.status(500).json(new ErrorResponseDTO(
-                    "Error trying to fetch data from the API",
+                    "Error trying to connect to the API",
                     e.getMessage(),
                     ctx.path(),
                     ctx.method().toString()

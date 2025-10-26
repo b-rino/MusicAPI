@@ -85,7 +85,7 @@ public class SecurityUtils {
             SignedJWT jwt = SignedJWT.parse(token);
             return jwt.getJWTClaimsSet().getClaim("username").toString();
         } catch (ParseException e) {
-            throw new RuntimeException("Invalid token", e);
+            throw new TokenVerificationException("Invalid token");
         }
     }
 }

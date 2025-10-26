@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.dtos.SongDTO;
+import app.exceptions.ApiException;
 import app.services.DeezerClient;
 import io.javalin.http.Context;
 
@@ -16,11 +17,14 @@ public class SystemController {
     }
 
     public void healthCheck(Context ctx) {
-        ctx.status(200).json("{\"msg\": \"API is up and running\"}");
+        try{
+            ctx.status(200).json("{\"msg\": \"API is up and running\"}");
+        } catch (Exception e){
+            throw new ApiException("Healthcheck failed");
+        }
     }
 
 
-    //TODO: Refactor til SongController
     public void searchExternal(Context ctx) {
         String query = ctx.queryParam("query");
         if (query == null || query.isBlank()) {

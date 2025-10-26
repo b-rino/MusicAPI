@@ -34,19 +34,25 @@ Content-Type: application/json
 
 ### Create a new playlist (requires token)
 POST {{baseUrl}}playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjEyNDIwNTksInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.TCz9sStgI7joxlmrQOlFNarv_1iZCyoa4-R474AAzWo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
 Content-Type: application/json
 
 {
-  "name": "Workout pt 2"
+  "name": "Country"
 }
+
+###
+
+### Fetch songs from external API (open to anybody)
+GET {{baseUrl}}songs/search?query=zachbryan
+Content-Type: application/json
 
 ###
 
 
 ### Add a song to a particular playlist (from external API)
-POST {{baseUrl}}playlists/5/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6InVzZXIyIiwiZXhwIjoxNzYxMjQxMzEzLCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6InVzZXIyIn0.3NqVDHXgruUxF45L6EqXrHFIeDicbWuRndjauU2D4nE
+POST {{baseUrl}}playlists/8/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
 Content-Type: application/json
 
 {
@@ -74,8 +80,8 @@ Content-Type: application/json
 ###
 
 ### Add a song to a particular playlist (from external API)
-POST {{baseUrl}}playlists/5/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzYxMjQxNTI1LCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9.pUHwEtId880i_HxFp_CIJC2vSSnHjRQ-gwnM_CDNkik
+POST {{baseUrl}}playlists/4/songs
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTI5MzIwNSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.f4Fs1h2VkZdZLT2mYBnM0Gda0yiOmvRUUL07ZXUVd8Y
 Content-Type: application/json
 
 {
@@ -90,14 +96,14 @@ Content-Type: application/json
 
 ### Get all playlists for specific user (requires token)
 GET {{baseUrl}}playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6InVzZXIyIiwiZXhwIjoxNzYxMjQxMzEzLCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6InVzZXIyIn0.3NqVDHXgruUxF45L6EqXrHFIeDicbWuRndjauU2D4nE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
 Content-Type: application/json
 
 ###
 
 ### Get all songs for a particular playlist
 GET {{baseUrl}}playlists/5/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6InVzZXIyIiwiZXhwIjoxNzYxMjQxMzEzLCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6InVzZXIyIn0.3NqVDHXgruUxF45L6EqXrHFIeDicbWuRndjauU2D4nE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0MTMyNjgsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.AM6U4h99ECScrl-8wHHA6fAzLyiTSP-I9ghmOty6WvM
 Content-Type: application/json
 
 
@@ -119,12 +125,12 @@ Content-Type: application/json
 
 ###
 ### Update playlist name (user)
-PUT {{baseUrl}}playlists/5
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6InVzZXIyIiwiZXhwIjoxNzYxMjQxMzEzLCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6InVzZXIyIn0.3NqVDHXgruUxF45L6EqXrHFIeDicbWuRndjauU2D4nE
+PUT {{baseUrl}}playlists/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTI5MzIwNSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.f4Fs1h2VkZdZLT2mYBnM0Gda0yiOmvRUUL07ZXUVd8Y
 Content-Type: application/json
 
 {
-  "name": "Evening Chill"
+  "name": "Classico"
 }
 
 ###
@@ -133,7 +139,7 @@ Content-Type: application/json
 
 ### Get all users (require admin role)
 GET {{baseUrl}}admin/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjEyNDIwNTksInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.TCz9sStgI7joxlmrQOlFNarv_1iZCyoa4-R474AAzWo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjEyOTM0NjAsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.ntYLjns3xeIDMCyEBdygGdlKbCLTLrm8AC4b1Yo3YxI
 Content-Type: application/json
 
 ###
@@ -148,14 +154,14 @@ Content-Type: application/json
 
 ### Get all songs from own db (require admin role)
 GET {{baseUrl}}admin/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjEyNDIwNTksInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.TCz9sStgI7joxlmrQOlFNarv_1iZCyoa4-R474AAzWo
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0MTMyNjgsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.AM6U4h99ECScrl-8wHHA6fAzLyiTSP-I9ghmOty6WvM
 Content-Type: application/json
 
 ###
 
 ### Add role to user (require admin role)
 PATCH {{baseUrl}}admin/users/user1/role
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6ImFkbWluIiwiZXhwIjoxNzYxMjQxNTI1LCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJhZG1pbiJ9.pUHwEtId880i_HxFp_CIJC2vSSnHjRQ-gwnM_CDNkik
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0MTMyNjgsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.AM6U4h99ECScrl-8wHHA6fAzLyiTSP-I9ghmOty6WvM
 Content-Type: application/json
 
 {
