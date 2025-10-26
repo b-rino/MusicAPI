@@ -2,11 +2,8 @@ package app.services;
 
 import app.dtos.SongDTO;
 import app.exceptions.ApiException;
-import app.utils.SecurityUtils;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,12 +15,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeezerClient {
+public class ExternalSongService {
 
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public DeezerClient(){
+    public ExternalSongService(){
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new Utils().getObjectMapper();
     }
@@ -56,7 +53,6 @@ public class DeezerClient {
             throw new ApiException("Failed to parse Deezer response");
         }
     }
-
 
 
 
