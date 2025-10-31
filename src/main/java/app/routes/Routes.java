@@ -25,7 +25,7 @@ public class Routes {
     public EndpointGroup getRoutes(){
         return () -> {
             get("/", ctx -> ctx.result("Welcome to the MusicAPI. Please visit 'music.brino.dk/api/v1routes' to see available routes"));
-            get("/healtcheck", ctx -> ctx.result("API is up and running"));
+            get("/healthcheck", ctx -> ctx.result("API is up and running"));
             path("", externalSongRoutes.getRoutes());
             path("", authRoutes.getRoutes());
             path("", playlistRoutes.getRoutes());

@@ -38,7 +38,7 @@ public class Song {
 /*    @ToString.Include         external API doesn't have release year!?
     private Integer releaseYear;*/
 
-    @ManyToMany(mappedBy = "songs")
+    @ManyToMany(mappedBy = "songs", fetch = FetchType.LAZY)
     private Set<Playlist> playlists = new HashSet();
 
 }

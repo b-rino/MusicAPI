@@ -34,11 +34,11 @@ Content-Type: application/json
 
 ### Create a new playlist (requires token)
 POST {{baseUrl}}playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTU1MzQ5MSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.6EdJrSxOC6togqovTJWLBiSZ6KInq35sgM90bJFq8bQ
 Content-Type: application/json
 
 {
-  "name": "Country"
+  "name": "Jazz"
 }
 
 ###
@@ -51,7 +51,7 @@ Content-Type: application/json
 
 
 ### Add a song to a particular playlist (from external API)
-POST {{baseUrl}}playlists/8/songs
+POST {{baseUrl}}playlists/5/songs
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
 Content-Type: application/json
 
@@ -67,7 +67,7 @@ Content-Type: application/json
 
 ### Add a song to a particular playlist (from external API)
 POST {{baseUrl}}playlists/5/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6InVzZXIyIiwiZXhwIjoxNzYxMjQxMzEzLCJyb2xlcyI6IlVzZXIiLCJ1c2VybmFtZSI6InVzZXIyIn0.3NqVDHXgruUxF45L6EqXrHFIeDicbWuRndjauU2D4nE
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTU1MzQ5MSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.6EdJrSxOC6togqovTJWLBiSZ6KInq35sgM90bJFq8bQ
 Content-Type: application/json
 
 {
@@ -96,7 +96,7 @@ Content-Type: application/json
 
 ### Get all playlists for specific user (requires token)
 GET {{baseUrl}}playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjE0MTQyMjQsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.Q4yJD1-PNMqg-jMrj-pElM2r64Jp76flxNY6_HqBDUw
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTU1MzQ5MSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.6EdJrSxOC6togqovTJWLBiSZ6KInq35sgM90bJFq8bQ
 Content-Type: application/json
 
 ###
@@ -126,7 +126,7 @@ Content-Type: application/json
 ###
 ### Update playlist name (user)
 PUT {{baseUrl}}playlists/4
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTI5MzIwNSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.f4Fs1h2VkZdZLT2mYBnM0Gda0yiOmvRUUL07ZXUVd8Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0NzA1ODIsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.McSGVSN19kihdEVm5QGwKx7jMu0IT-2l8GtYG7OjPb4
 Content-Type: application/json
 
 {
@@ -154,7 +154,7 @@ Content-Type: application/json
 
 ### Get all songs from own db (require admin role)
 GET {{baseUrl}}admin/songs
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0MTMyNjgsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.AM6U4h99ECScrl-8wHHA6fAzLyiTSP-I9ghmOty6WvM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0NzA1ODIsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.McSGVSN19kihdEVm5QGwKx7jMu0IT-2l8GtYG7OjPb4
 Content-Type: application/json
 
 ###
