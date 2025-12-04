@@ -7,6 +7,7 @@ import app.exceptions.*;
 import app.routes.Routes;
 import app.routes.AuthRoutes;
 import io.javalin.Javalin;
+import io.javalin.http.Context;
 import io.javalin.http.UnauthorizedResponse;
 import jakarta.persistence.EntityManagerFactory;
 import org.slf4j.Logger;
@@ -29,9 +30,25 @@ public class ApplicationConfig {
         configureSecurity(app, authRoutes.getAuthController());
         configureLogging(app);
         configureExceptionHandling(app);
+        configureCors(app);
 
         app.start(port);
         return app;
+    }
+
+    private static void corsHeaders(Context ctx) {
+        ctx.header("Access-Control-Allow-Origin", "*");
+        ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        ctx.header("Access-Control-Allow-Credentials", "true");
+    }
+
+    private static void corsHeadersOptions(Context ctx) {
+        ctx.header("Access-Control-Allow-Origin", "*");
+        ctx.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        ctx.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        ctx.header("Access-Control-Allow-Credentials", "true");
+        ctx.status(204);
     }
 
     public static void stopServer(Javalin app) {
@@ -161,4 +178,12 @@ public class ApplicationConfig {
         app.beforeMatched(controller.authenticate());
         app.beforeMatched(controller.authorize());
     }
+
+    private static void configureCors(Javalin app) {
+        app.before(ctx -> corsHeaders(ctx));
+
+
+        app.options("/*", ctx -> corsHeadersOptions(ctx));
+    }
+
 }
