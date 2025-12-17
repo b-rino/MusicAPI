@@ -25,6 +25,7 @@ public class AdminRoutes {
     public EndpointGroup getRoutes() {
         return () -> {
             get("users", controller::getAllUsers, Role.ADMIN);
+            get("users/{username}", controller::getUserDetails, Role.ADMIN);
             delete("users/{username}", controller::deleteUser, Role.ADMIN);
             get("songs", controller::getAllSongs, Role.ADMIN);
             patch("users/{username}/role", controller::updateUserRole, Role.ADMIN);

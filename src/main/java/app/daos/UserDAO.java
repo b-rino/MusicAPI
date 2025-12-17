@@ -81,6 +81,22 @@ public class UserDAO {
         }
     }
 
+    public User getUserDetails(String username) {
+        try (EntityManager em = emf.createEntityManager()) {
+            return em.createQuery(
+                            "SELECT DISTINCT u FROM User u " +
+                                    "LEFT JOIN FETCH u.roles " +
+                                    "LEFT JOIN FETCH u.playlists p " +
+                                    "LEFT JOIN FETCH p.songs " +
+                                    "WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new EntityNotFoundException("Couldn't find user with username: " + username);
+        }
+    }
+
+
 
 
 }

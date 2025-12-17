@@ -14,7 +14,7 @@ POST {{baseUrl}}login
 Content-Type: application/json
 
 {
-  "username": "User",
+  "username": "Useer",
   "password": "User"
 }
 
@@ -139,7 +139,7 @@ Content-Type: application/json
 
 ### Get all users (require admin role)
 GET {{baseUrl}}admin/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjEyOTM0NjAsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.ntYLjns3xeIDMCyEBdygGdlKbCLTLrm8AC4b1Yo3YxI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjU5NjIwODMsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.C137_8HRcBtwMm7O9bVRUfQI7jWh0OULARsxdlTW0W4
 Content-Type: application/json
 
 ###
@@ -160,12 +160,20 @@ Content-Type: application/json
 ###
 
 ### Add role to user (require admin role)
-PATCH {{baseUrl}}admin/users/user1/role
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjE0MTMyNjgsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.AM6U4h99ECScrl-8wHHA6fAzLyiTSP-I9ghmOty6WvM
+PATCH {{baseUrl}}admin/users/Benji/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjU5NTk4NjYsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.9Nl965-C-H5ygfof1QH9Yzga3lvyBOS_M8Zya34CSrE
 Content-Type: application/json
 
 {
   "roleName": "Admin"
 }
+
+###
+
+
+### get details by username (require admin role)
+GET {{baseUrl}}admin/users/user1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzY1OTY1NjkyLCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJBZG1pbiJ9.VBh9GJTCzE2w2BCLDDxM3QUqhRM7rSq8-ActEprIUaU
+Content-Type: application/json
 
 ###

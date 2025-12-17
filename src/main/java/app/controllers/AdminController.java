@@ -43,6 +43,9 @@ public class AdminController {
     }
 
 
-
-
+    public void getUserDetails(Context ctx) {
+        String username = ctx.pathParam("username");
+        UserDTO dto = service.fetchUserDetails(username);
+        ctx.json(dto);
+    }
 }

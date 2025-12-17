@@ -80,7 +80,23 @@ public class AdminService {
         userDAO.update(user);
     }
 
+    public UserDTO fetchUserDetails(String username) {
+        User user = userDAO.getUserDetails(username);
 
+        Set<String> roles = user.getRoles().stream()
+                .map(Role::getRoleName)
+                .collect(Collectors.toSet());
+
+        Set<PlaylistDTO> playlists = user.getPlaylists().stream()
+                .map(PlaylistDTO::new)
+                .collect(Collectors.toSet());
+
+        return UserDTO.builder()
+                .username(user.getUsername())
+                .roles(roles)
+                .playlists(playlists)
+                .build();
+    }
 
 }
 
