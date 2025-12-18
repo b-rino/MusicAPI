@@ -20,6 +20,7 @@ public class ExternalSongRoutes {
     public EndpointGroup getRoutes() {
         return () -> {
             get("songs/search", controller::searchExternal, Role.ANYONE);
+            get("songs/track/{trackId}", controller::searchByTrackId, Role.ANYONE);
         };
     }
 }

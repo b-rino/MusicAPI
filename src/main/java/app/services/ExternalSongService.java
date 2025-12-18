@@ -38,7 +38,7 @@ public class ExternalSongService {
 
             for (var track : data) {
                 SongDTO song = SongDTO.builder()
-                        .externalId(track.get("id").asInt())
+                        .externalId(track.get("id").asLong())
                         .title(track.get("title").asText())
                         .artist(track.get("artist").get("name").asText())
                         .album(track.get("album").get("title").asText())
@@ -76,6 +76,30 @@ public class ExternalSongService {
             throw new ApiException("Invalid URL");
         } catch (Exception e) {
             throw new ApiException("Failed to call Deezer API ");
+        }
+    }
+
+    public SongDTO getSongByTrackId(long trackId) {
+        String url = "https://api.deezer.com/track/" + trackId;
+
+        String json = httpGet(url);
+        try {
+            var root = objectMapper.readTree(json);
+
+            // Deezer returnerer et objekt, ikke et array
+            if (root == null || root.get("id") == null) {
+                throw new ApiException("No track found for id " + trackId);
+            }
+
+            return SongDTO.builder()
+                    .externalId(root.get("id").asLong())
+                    .title(root.get("title").asText())
+                    .artist(root.get("artist").get("name").asText())
+                    .album(root.get("album").get("title").asText())
+                    .build();
+
+        } catch (Exception e) {
+            throw new ApiException("Failed to parse Deezer track response");
         }
     }
 

@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddSongDTO {
-    private Integer externalId;
+    private Long externalId;
     private String title;
     private String artist;
     private String album;

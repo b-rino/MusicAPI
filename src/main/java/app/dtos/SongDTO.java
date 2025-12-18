@@ -15,7 +15,7 @@ import lombok.*;
 public class SongDTO {
 
     private Integer id;
-    private Integer externalId;
+    private Long externalId;
     private String title;
     private String artist;
     private String album;

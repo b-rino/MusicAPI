@@ -24,7 +24,7 @@ public class Song {
     private Integer id;
 
     @Column(name = "external_id", unique = true, nullable = false)
-    private Integer externalId;
+    private Long externalId;
 
     @ToString.Include
     @Column(length = 100, nullable = false)

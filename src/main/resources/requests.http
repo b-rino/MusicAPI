@@ -14,7 +14,7 @@ POST {{baseUrl}}login
 Content-Type: application/json
 
 {
-  "username": "Useer",
+  "username": "User",
   "password": "User"
 }
 
@@ -45,6 +45,12 @@ Content-Type: application/json
 
 ### Fetch songs from external API (open to anybody)
 GET {{baseUrl}}songs/search?query=zachbryan
+Content-Type: application/json
+
+###
+
+### Fetch songs from external API (open to anybody)
+GET {{baseUrl}}songs/track/3078570181
 Content-Type: application/json
 
 ###
@@ -172,8 +178,10 @@ Content-Type: application/json
 
 
 ### get details by username (require admin role)
-GET {{baseUrl}}admin/users/user1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IkFkbWluIiwiZXhwIjoxNzY1OTY1NjkyLCJyb2xlcyI6IkFkbWluIiwidXNlcm5hbWUiOiJBZG1pbiJ9.VBh9GJTCzE2w2BCLDDxM3QUqhRM7rSq8-ActEprIUaU
+GET {{baseUrl}}admin/users/User
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiQWRtaW4iLCJleHAiOjE3NjU5NjY3NjEsInJvbGVzIjoiQWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIn0.WQp3bwUpL3kgxgGDU09BoJogYzRV8kctZvP1dMbTJgw
 Content-Type: application/json
 
 ###
+
+

@@ -54,9 +54,9 @@ public class Populator {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
 
-            Song s1 = new Song(null, 1001, "Blinding Lights", "The Weeknd", "After Hours", new HashSet<>());
-            Song s2 = new Song(null, 1002, "Levitating", "Dua Lipa", "Future Nostalgia", new HashSet<>());
-            Song s3 = new Song(null, 1003, "Lose Yourself", "Eminem", "8 Mile", new HashSet<>());
+            Song s1 = new Song(null, 1001L, "Blinding Lights", "The Weeknd", "After Hours", new HashSet<>());
+            Song s2 = new Song(null, 1002L, "Levitating", "Dua Lipa", "Future Nostalgia", new HashSet<>());
+            Song s3 = new Song(null, 1003L, "Lose Yourself", "Eminem", "8 Mile", new HashSet<>());
 
             em.persist(s1);
             em.persist(s2);
