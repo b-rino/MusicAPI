@@ -4,6 +4,7 @@ import app.controllers.PlaylistController;
 import app.daos.PlaylistDAO;
 import app.daos.UserDAO;
 import app.enums.Role;
+import app.services.ExternalSongService;
 import app.services.PlaylistService;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
@@ -17,7 +18,8 @@ public class PlaylistRoutes {
     public PlaylistRoutes(EntityManagerFactory emf){
         PlaylistDAO playlistDAO = new PlaylistDAO(emf);
         UserDAO userDAO = new UserDAO(emf);
-        PlaylistService service = new PlaylistService(playlistDAO);
+        ExternalSongService externalSongService = new ExternalSongService();
+        PlaylistService service = new PlaylistService(playlistDAO, externalSongService);
         this.controller = new PlaylistController(service, userDAO);
     }
 
@@ -26,6 +28,7 @@ public class PlaylistRoutes {
             post("playlists", controller::create, Role.USER);
             get("playlists", controller::getAllPlaylistsForUser, Role.USER);
             post("playlists/{id}/songs", controller::addSong, Role.USER);
+            post("playlists/{id}/songs/by-external", controller::addSongByExternalId, Role.USER);
             get("playlists/{id}/songs", controller::getSongs, Role.USER);
             delete("playlists/{id}", controller::deletePlaylist, Role.USER);
             delete("playlists/{playlistId}/songs/{songId}", controller::removeSongFromPlaylist, Role.USER);

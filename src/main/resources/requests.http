@@ -34,11 +34,11 @@ Content-Type: application/json
 
 ### Create a new playlist (requires token)
 POST {{baseUrl}}playlists
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJCZW5qYW1pbiBSaW5vIiwic3ViIjoiVXNlciIsImV4cCI6MTc2MTU1MzQ5MSwicm9sZXMiOiJVc2VyIiwidXNlcm5hbWUiOiJVc2VyIn0.6EdJrSxOC6togqovTJWLBiSZ6KInq35sgM90bJFq8bQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjYwNTIxNzMsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.4FZouhbz3G_bpl1l98exRVbGUzWcRVWf0JHpxcpNwJk
 Content-Type: application/json
 
 {
-  "name": "Jazz"
+  "name": "Jazzi"
 }
 
 ###
@@ -69,6 +69,18 @@ Content-Type: application/json
 }
 
 ###
+
+### Add a song to a particular playlist (from external API) by external ID
+POST {{baseUrl}}playlists/3/songs/by-external
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJcIkJlbmphbWluIFJpbm9cIiIsInN1YiI6IlVzZXIiLCJleHAiOjE3NjYwNTIxNzMsInJvbGVzIjoiVXNlciIsInVzZXJuYW1lIjoiVXNlciJ9.4FZouhbz3G_bpl1l98exRVbGUzWcRVWf0JHpxcpNwJk
+Content-Type: application/json
+
+{
+  "externalId": 1152619812
+}
+
+###
+
 
 
 ### Add a song to a particular playlist (from external API)

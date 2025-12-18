@@ -145,15 +145,14 @@ MusicAPI er testet med **RestAssured** og **Hamcrest** som integrationstests, de
     - Autorisationsfejl med korrekte statuskoder (`400`, `401`, `403`, `404`)
 
 ## 📚 JSON-struktur på fejlmeddelelser (exceptions)
-
-```json
+`````
 {
   "error": "Access Denied",
   "message": "You do not own this playlist",
   "path": "/api/v1/playlists/2/songs",
   "method": "GET"
 }
-````
+`````````
 
 
 ## 🔗 Projektlink

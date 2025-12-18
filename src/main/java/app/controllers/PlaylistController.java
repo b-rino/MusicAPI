@@ -1,10 +1,7 @@
 package app.controllers;
 
 import app.daos.UserDAO;
-import app.dtos.AddSongDTO;
-import app.dtos.CreatePlaylistDTO;
-import app.dtos.PlaylistDTO;
-import app.dtos.SongDTO;
+import app.dtos.*;
 import app.entities.Playlist;
 import app.entities.User;
 import app.exceptions.ValidationException;
@@ -12,6 +9,7 @@ import app.services.PlaylistService;
 import app.utils.SecurityUtils;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.javalin.http.Context;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -104,4 +102,18 @@ public class PlaylistController {
         ctx.status(200).json(updated);
     }
 
+    public void addSongByExternalId(Context ctx) {
+        int playlistId = Integer.parseInt(ctx.pathParam("id"));
+
+        AddSongByIdDTO dto = ctx.bodyAsClass(AddSongByIdDTO.class);
+
+        if (dto.getExternalId() == null || dto.getExternalId() <= 0) {
+            throw new IllegalStateException("Missing or invalid externalId");
+        }
+
+        String username = SecurityUtils.getUsernameFromToken(ctx.header("Authorization").replace("Bearer", ""));
+
+        PlaylistDTO updated = service.addSongByExternalId(playlistId, dto.getExternalId(), username);
+        ctx.status(200).json(updated);
+    }
 }

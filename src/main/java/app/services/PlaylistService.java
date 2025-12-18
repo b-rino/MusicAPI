@@ -18,8 +18,10 @@ import java.util.stream.Collectors;
 public class PlaylistService {
 
     private final PlaylistDAO dao;
+    private final ExternalSongService externalSongService;
 
-    public PlaylistService(PlaylistDAO dao){
+    public PlaylistService(PlaylistDAO dao,  ExternalSongService externalSongService) {
+        this.externalSongService = externalSongService;
         this.dao = dao;
     }
 
@@ -146,4 +148,39 @@ public class PlaylistService {
                 .songs(updated.getSongs().stream().map(SongDTO::new).collect(Collectors.toSet()))
                 .build();
     }
+
+    public PlaylistDTO addSongByExternalId(int playlistId, Long externalId, String username) {
+        // 1. Hent playlist og check ejerskab
+        Playlist playlist = dao.getByIdWithOwner(playlistId);
+        if (playlist == null || !playlist.getOwner().getUsername().equals(username)) {
+            throw new ValidationException("You do not own this playlist");
+        }
+
+        // 2. Slå sangen op via Deezer
+        SongDTO externalSong = externalSongService.getSongByTrackId(externalId);
+        if (externalSong == null) {
+            throw new EntityNotFoundException("No song found with externalId " + externalId);
+        }
+
+        // 3. Opret Song‑entity baseret på Deezer‑metadata
+        Song song = new Song();
+        song.setExternalId(externalSong.getExternalId());
+        song.setTitle(externalSong.getTitle());
+        song.setArtist(externalSong.getArtist());
+        song.setAlbum(externalSong.getAlbum());
+
+        // 4. Brug DAO til at tilføje sangen til playlist
+        Playlist updated = dao.addSongToPlaylist(playlistId, song);
+
+        // 5. Returner DTO
+        return PlaylistDTO.builder()
+                .id(updated.getId())
+                .name(updated.getName())
+                .username(updated.getOwner().getUsername())
+                .songs(updated.getSongs().stream()
+                        .map(SongDTO::new)
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
 }
