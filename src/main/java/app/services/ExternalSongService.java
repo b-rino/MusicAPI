@@ -1,8 +1,8 @@
 package app.services;
 
-import app.dtos.PlaylistDTO;
 import app.dtos.SongDTO;
 import app.exceptions.ApiException;
+import app.exceptions.EntityNotFoundException;
 import app.utils.Utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -86,14 +86,24 @@ public class ExternalSongService {
 
     public SongDTO getSongByTrackId(long trackId) {
         String url = "https://api.deezer.com/track/" + trackId;
-
-        String json = httpGet(url);
         try {
-            var root = objectMapper.readTree(json);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(url))
+                    .GET()
+                    .build();
 
-            // Deezer returnerer et objekt, ikke et array
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 404) {
+                throw new EntityNotFoundException("No song found with id " + trackId);
+            }
+            if (response.statusCode() != 200) {
+                throw new ApiException("Deezer API error: " + response.statusCode());
+            }
+
+            var root = objectMapper.readTree(response.body());
             if (root == null || root.get("id") == null) {
-                throw new ApiException("No track found for id " + trackId);
+                throw new EntityNotFoundException("No song found with id " + trackId);
             }
 
             return SongDTO.builder()
@@ -103,8 +113,10 @@ public class ExternalSongService {
                     .album(root.get("album").get("title").asText())
                     .build();
 
+        } catch (EntityNotFoundException | ApiException e) {
+            throw e;
         } catch (Exception e) {
-            throw new ApiException("Failed to parse Deezer track response");
+            throw new ApiException("Failed to fetch track from Deezer");
         }
     }
 
