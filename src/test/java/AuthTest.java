@@ -87,7 +87,7 @@ public class AuthTest {
         given().contentType("application/json")
                 .body("{\"username\":\"user1\",\"password\":\"wrongpass\"}")
                 .when().post("/login")
-                .then().statusCode(403)
+                .then().statusCode(401)
                 .body("message", containsString("Invalid username or password"));
     }
 
@@ -97,7 +97,7 @@ public class AuthTest {
         given().contentType("application/json")
                 .body("{\"username\":\"ghost\",\"password\":\"nopass\"}")
                 .when().post("/login")
-                .then().statusCode(403)
+                .then().statusCode(401)
                 .body("message", containsString("Invalid username or password"));
     }
 
