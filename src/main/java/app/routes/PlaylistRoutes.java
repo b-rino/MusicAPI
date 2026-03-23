@@ -15,10 +15,9 @@ public class PlaylistRoutes {
 
     private final PlaylistController controller;
 
-    public PlaylistRoutes(EntityManagerFactory emf){
+    public PlaylistRoutes(EntityManagerFactory emf, ExternalSongService externalSongService){
         PlaylistDAO playlistDAO = new PlaylistDAO(emf);
         UserDAO userDAO = new UserDAO(emf);
-        ExternalSongService externalSongService = new ExternalSongService();
         PlaylistService service = new PlaylistService(playlistDAO, externalSongService);
         this.controller = new PlaylistController(service, userDAO);
     }

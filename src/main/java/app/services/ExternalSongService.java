@@ -21,8 +21,12 @@ public class ExternalSongService {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public ExternalSongService(){
-        this.httpClient = HttpClient.newHttpClient();
+    public ExternalSongService() {
+        this(HttpClient.newHttpClient());
+    }
+
+    public ExternalSongService(HttpClient httpClient) {
+        this.httpClient = httpClient;
         this.objectMapper = new Utils().getObjectMapper();
     }
 

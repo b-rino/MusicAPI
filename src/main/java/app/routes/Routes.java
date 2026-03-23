@@ -18,7 +18,7 @@ public class Routes {
         ExternalSongService ess = new ExternalSongService();
         this.authRoutes = new AuthRoutes(emf);
         this.externalSongRoutes = new ExternalSongRoutes(ess);
-        this.playlistRoutes = new PlaylistRoutes(emf);
+        this.playlistRoutes = new PlaylistRoutes(emf, ess);
         this.adminRoutes = new AdminRoutes(emf);
     }
 
