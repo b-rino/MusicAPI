@@ -1,6 +1,5 @@
 package app.daos;
 
-import app.config.HibernateConfig;
 import app.entities.Playlist;
 import app.entities.Role;
 import app.entities.User;
@@ -113,14 +112,4 @@ public class AuthDAO {
     }
 
 
-    public static void main(String[] args) {
-        AuthDAO dao = new AuthDAO(HibernateConfig.getEntityManagerFactory());
-
-        dao.createUser("admin", "admin");
-        dao.createUser("User", "User");
-        dao.createRole("User");
-        dao.createRole("Admin");
-        dao.addUserRole("admin", "Admin");
-        dao.addUserRole("User", "User");
-    }
 }
