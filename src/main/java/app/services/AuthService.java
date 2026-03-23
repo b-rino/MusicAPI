@@ -27,22 +27,22 @@ public class AuthService {
         this.securityUtils = securityUtils;
     }
 
+    private String getRequiredConfig(String envKey, String propertyKey) {
+        String value = System.getenv("DEPLOYED") != null
+                ? System.getenv(envKey)
+                : Utils.getPropertyValue(propertyKey, "config.properties");
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException("Missing required configuration: " + envKey);
+        }
+        return value;
+    }
+
     public String createToken(UserDTO user) throws TokenCreationException {
         try {
-            String ISSUER;
-            String TOKEN_EXPIRE_TIME;
-            String SECRET_KEY;
-
-            if (System.getenv("DEPLOYED") != null) {
-                ISSUER = System.getenv("ISSUER");
-                TOKEN_EXPIRE_TIME = System.getenv("TOKEN_EXPIRE_TIME");
-                SECRET_KEY = System.getenv("SECRET_KEY");
-            } else {
-                ISSUER = Utils.getPropertyValue("ISSUER", "config.properties");
-                TOKEN_EXPIRE_TIME = Utils.getPropertyValue("TOKEN_EXPIRE_TIME", "config.properties");
-                SECRET_KEY = Utils.getPropertyValue("SECRET_KEY", "config.properties");
-            }
-            return securityUtils.createToken(user, ISSUER, TOKEN_EXPIRE_TIME, SECRET_KEY);
+            String issuer = getRequiredConfig("ISSUER", "ISSUER");
+            String expireTime = getRequiredConfig("TOKEN_EXPIRE_TIME", "TOKEN_EXPIRE_TIME");
+            String secretKey = getRequiredConfig("SECRET_KEY", "SECRET_KEY");
+            return securityUtils.createToken(user, issuer, expireTime, secretKey);
         } catch (TokenCreationException e) {
             logger.error("Token creation failed for user '{}': {}", user.getUsername(), e.getMessage(), e);
             throw new TokenCreationException("Could not create token", e);
@@ -82,10 +82,7 @@ public class AuthService {
 
 
     public UserDTO verifyToken(String token) throws TokenVerificationException {
-        boolean IS_DEPLOYED = (System.getenv("DEPLOYED") != null);
-        String SECRET = IS_DEPLOYED
-                ? System.getenv("SECRET_KEY")
-                : Utils.getPropertyValue("SECRET_KEY", "config.properties");
+        String SECRET = getRequiredConfig("SECRET_KEY", "SECRET_KEY");
 
         try {
             if (!securityUtils.tokenIsValid(token, SECRET)) {
