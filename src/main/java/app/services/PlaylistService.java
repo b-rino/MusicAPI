@@ -20,14 +20,22 @@ public class PlaylistService {
     private final PlaylistDAO dao;
     private final ExternalSongService externalSongService;
 
-    public PlaylistService(PlaylistDAO dao,  ExternalSongService externalSongService) {
+    public PlaylistService(PlaylistDAO dao, ExternalSongService externalSongService) {
         this.externalSongService = externalSongService;
         this.dao = dao;
     }
 
-    public PlaylistDTO createPlaylist(String name, User owner){
+    private void assertOwnership(Playlist playlist, String username) {
+        if (playlist == null) {
+            throw new EntityNotFoundException("Playlist not found");
+        }
+        if (!playlist.getOwner().getUsername().equals(username)) {
+            throw new ValidationException("You do not own this playlist");
+        }
+    }
 
-        if(dao.existsByNameAndOwner(name, owner)){
+    public PlaylistDTO createPlaylist(String name, User owner) {
+        if (dao.existsByNameAndOwner(name, owner)) {
             throw new EntityAlreadyExistsException("You already have a playlist with the name: '" + name + "'");
         }
 
@@ -41,7 +49,7 @@ public class PlaylistService {
                 .id(saved.getId())
                 .name(saved.getName())
                 .username(owner.getUsername())
-                .songs(Set.of()) //tomt Set af sange ved oprettelse af ny playlist
+                .songs(Set.of())
                 .build();
     }
 
@@ -61,9 +69,7 @@ public class PlaylistService {
 
     public PlaylistDTO addSong(int playlistId, AddSongDTO dto, String username) {
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null || !playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
+        assertOwnership(playlist, username);
 
         Song song = new Song();
         song.setExternalId(dto.getExternalId());
@@ -89,34 +95,19 @@ public class PlaylistService {
 
     public List<SongDTO> getSongsForUserPlaylist(int playlistId, String username) {
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null || !playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
+        assertOwnership(playlist, username);
         return playlist.getSongs().stream().map(SongDTO::new).toList();
     }
 
     public void deletePlaylist(int playlistId, String username) {
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null) {
-            throw new EntityNotFoundException("Playlist not found");
-        }
-
-        if (!playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
-
+        assertOwnership(playlist, username);
         dao.delete(playlistId);
     }
 
     public void removeSongFromPlaylist(int playlistId, int songId, String username) {
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null) {
-            throw new EntityNotFoundException("Playlist not found");
-        }
-
-        if (!playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
+        assertOwnership(playlist, username);
 
         Song songToRemove = playlist.getSongs().stream()
                 .filter(song -> song.getId() == songId)
@@ -130,13 +121,7 @@ public class PlaylistService {
 
     public PlaylistDTO updatePlaylistName(int playlistId, String newName, String username) {
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null) {
-            throw new EntityNotFoundException("Playlist not found");
-        }
-
-        if (!playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
+        assertOwnership(playlist, username);
 
         playlist.setName(newName);
         Playlist updated = dao.update(playlist);
@@ -150,29 +135,19 @@ public class PlaylistService {
     }
 
     public PlaylistDTO addSongByExternalId(int playlistId, Long externalId, String username) {
-        // 1. Hent playlist og check ejerskab
         Playlist playlist = dao.getByIdWithOwner(playlistId);
-        if (playlist == null || !playlist.getOwner().getUsername().equals(username)) {
-            throw new ValidationException("You do not own this playlist");
-        }
+        assertOwnership(playlist, username);
 
-        // 2. Slå sangen op via Deezer
         SongDTO externalSong = externalSongService.getSongByTrackId(externalId);
-        if (externalSong == null) {
-            throw new EntityNotFoundException("No song found with externalId " + externalId);
-        }
 
-        // 3. Opret Song‑entity baseret på Deezer‑metadata
         Song song = new Song();
         song.setExternalId(externalSong.getExternalId());
         song.setTitle(externalSong.getTitle());
         song.setArtist(externalSong.getArtist());
         song.setAlbum(externalSong.getAlbum());
 
-        // 4. Brug DAO til at tilføje sangen til playlist
         Playlist updated = dao.addSongToPlaylist(playlistId, song);
 
-        // 5. Returner DTO
         return PlaylistDTO.builder()
                 .id(updated.getId())
                 .name(updated.getName())
