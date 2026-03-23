@@ -129,6 +129,16 @@ public class ApplicationConfig {
             ));
         });
 
+        app.exception(UnauthorizedException.class, (e, ctx) -> {
+            logger.warn("Handled UnauthorizedException at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());
+            ctx.status(401).json(new ErrorResponseDTO(
+                    "Unauthorized",
+                    e.getMessage(),
+                    ctx.path(),
+                    ctx.method().toString()
+            ));
+        });
+
         //Javalin exception, which I import and then override output to JSON! Default is status code 401 and no JSON (+ added logging)
         app.exception(UnauthorizedResponse.class, (e, ctx) -> {
             logger.warn("Handled UnauthorizedResponse at [{}] {}: {}", ctx.method(), ctx.path(), e.getMessage());

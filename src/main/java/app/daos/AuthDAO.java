@@ -6,7 +6,7 @@ import app.entities.Role;
 import app.entities.User;
 import app.exceptions.EntityAlreadyExistsException;
 import app.exceptions.EntityNotFoundException;
-import app.exceptions.ValidationException;
+import app.exceptions.UnauthorizedException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
@@ -21,7 +21,7 @@ public class AuthDAO {
     }
 
 
-    public User getVerifiedUser(String username, String password) throws ValidationException {
+    public User getVerifiedUser(String username, String password) throws UnauthorizedException {
         try (EntityManager em = emf.createEntityManager()) {
             TypedQuery<User> query = em.createQuery(
                     "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.username = :username", User.class);
@@ -32,10 +32,10 @@ public class AuthDAO {
             if (foundUser.checkPassword(password)) {
                 return foundUser;
             } else {
-                throw new ValidationException("Invalid username or password");
+                throw new UnauthorizedException("Invalid username or password");
             }
         } catch (NoResultException e) {
-            throw new ValidationException("User not found");
+            throw new UnauthorizedException("Invalid username or password");
         }
     }
 

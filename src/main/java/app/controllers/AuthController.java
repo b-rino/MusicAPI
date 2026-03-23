@@ -3,6 +3,7 @@ package app.controllers;
 import app.dtos.UserDTO;
 import app.entities.Role;
 import app.entities.User;
+import app.exceptions.UnauthorizedException;
 import app.exceptions.ValidationException;
 import app.services.AuthService;
 import app.utils.SecurityUtils;
@@ -53,12 +54,12 @@ public class AuthController {
             try{
                 incomingUser = ctx.bodyAsClass(User.class);
             } catch (Exception e){
-                throw new ValidationException("Invalid request body");
+                throw new IllegalStateException("Invalid request body");
             }
             User checkedUser = authService.getVerifiedUser(incomingUser.getUsername(), incomingUser.getPassword());
 
             if(checkedUser == null){
-                throw new ValidationException("Invalid username or password");
+                throw new UnauthorizedException("Invalid username or password");
             }
 
             Set<String> roleNames = checkedUser.getRoles().stream().map(Role::getRoleName).collect(Collectors.toSet());
@@ -107,7 +108,7 @@ public class AuthController {
             }
             UserDTO user = ctx.attribute("user");
             if (user == null){
-                throw new ValidationException("No user was added from the token");
+                throw new UnauthorizedException("No user was added from the token");
             }
 
             if(!authService.userHasAllowedRole(user, allowedRoles)){
